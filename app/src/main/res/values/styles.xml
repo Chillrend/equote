@@ -7,5 +7,60 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
+        <item name="android:textAppearance">@style/FormText</item>
+        <item name="android:textColorHint">#000</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextInputLayoutLoginForm" parent="Base.Widget.MaterialComponents.TextInputLayout">
+        <item name="hintTextAppearance">@style/FormText</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintAnimationEnabled">false</item>
+        <item name="boxBackgroundMode">none</item>
+    </style>
+
+    <style name="H1_Light_Spacing">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/title_big</item>
+        <item name="android:letterSpacing">0.10</item>
+    </style>
+
+    <style name="H3_Light">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/title</item>
+    </style>
+
+    <style name="FormText">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/sub</item>
+    </style>
+
+    <style name="Par_Light">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/par</item>
+    </style>
+
+    <style name="Par_regular">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/par</item>
+    </style>
+
+    <style name="ButtonTextAppearance">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textSize">@dimen/sub</item>
+    </style>
 
 </resources>
