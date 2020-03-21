@@ -13,16 +13,31 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
-        <item name="android:textAppearance">@style/FormText</item>
-        <item name="android:textColorHint">#000</item>
+    <style name="GeneralInputLayout">
+        <item name="errorTextAppearance">@style/GeneralFormHintText</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintAnimationEnabled">false</item>
+        <item name="colorControlNormal">#000</item>
+        <item name="colorControlActivated">#000</item>
+    </style>
+
+    <style name="GeneralEditText">
+        <item name="android:textAppearance">@style/GeneralFormText</item>
+        <item name="android:textColorHint">#2F4F4F</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextInputLayoutLoginForm" parent="Base.Widget.MaterialComponents.TextInputLayout">
+    <style name="TextInputEditText">
+        <item name="android:textAppearance">@style/FormText</item>
+        <item name="android:textColorHint">#000</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextInputLayoutLoginForm">
         <item name="hintTextAppearance">@style/FormText</item>
         <item name="hintEnabled">false</item>
-        <item name="hintAnimationEnabled">false</item>
+        <item name="hintAnimationEnabled">true</item>
         <item name="boxBackgroundMode">none</item>
     </style>
 
@@ -43,6 +58,17 @@
         <item name="android:color">#000</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">@dimen/sub</item>
+    </style>
+
+    <style name="GeneralFormText">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">@dimen/sub</item>
+    </style>
+    <style name="GeneralFormHintText">
+        <item name="android:color">#000</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">@dimen/par</item>
     </style>
 
     <style name="Par_Light">

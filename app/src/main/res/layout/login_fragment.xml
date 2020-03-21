@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/spacing_large"
+    android:paddingBottom="@dimen/spacing_large"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -40,7 +44,7 @@
         android:layout_marginTop="@dimen/spacing_super_large"
         app:layout_constraintTop_toBottomOf="@id/greetingsSignIn"
         app:layout_constraintStart_toStartOf="parent"
-        android:theme="@style/TextInputLayoutLoginForm"
+        style="@style/TextInputLayoutLoginForm"
         >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_email"
@@ -52,8 +56,7 @@
             android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium"
-            android:theme="@style/TextInputEditText"
-            android:autofillHints="username"/>
+            style="@style/TextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +70,7 @@
         app:passwordToggleDrawable="@drawable/selector_password_v_toggler"
         app:passwordToggleEnabled="true"
         app:errorEnabled="true"
-        android:theme="@style/TextInputLayoutLoginForm"
+        style="@style/TextInputLayoutLoginForm"
         >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pwd_signin"
@@ -78,7 +81,7 @@
             android:paddingTop="@dimen/spacing_medium"
             android:paddingBottom="@dimen/spacing_medium"
             android:background="@drawable/background_circular_form"
-            android:theme="@style/TextInputEditText"
+            style="@style/TextInputEditText"
             android:inputType="textPassword"
             android:hint="@string/password"/>
     </com.google.android.material.textfield.TextInputLayout>
