@@ -71,6 +71,12 @@
         <item name="android:textSize">@dimen/par</item>
     </style>
 
+    <style name="GeneralFormErrorText">
+        <item name="android:color">@color/errorRed</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">@dimen/par</item>
+    </style>
+
     <style name="Par_Light">
         <item name="android:color">#000</item>
         <item name="android:fontFamily">sans-serif-light</item>

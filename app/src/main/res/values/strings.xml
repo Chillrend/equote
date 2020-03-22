@@ -10,4 +10,7 @@
     <string name="sign_up_here"><u>Don\'t have an account? Sign up here</u></string>
     <string name="please_fill_in_your_details">Please fill in your details</string>
     <string name="full_name">Full Name</string>
+    <string name="wrong_email_or_password">Wrong Email or Password</string>
+    <string name="email_cannot_be_empty">Email cannot be empty</string>
+    <string name="password_cannot_be_empty">Password cannot be empty</string>
 </resources>
