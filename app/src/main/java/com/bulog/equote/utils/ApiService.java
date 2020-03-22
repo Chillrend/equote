@@ -13,5 +13,6 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("register")
-    Call<JsonObject> register();
+    Call<JsonObject> register(@Field("fullname") String fullname, @Field("email") String email, @Field("password") String password,
+                            @Field("c_password") String cPassword, @Field("address") String address, @Field("phone") String phone, @Field("id_role") int role);
 }
