@@ -10,4 +10,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("login")
     Call<JsonObject> login(@Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("register")
+    Call<JsonObject> register();
 }

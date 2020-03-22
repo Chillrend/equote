@@ -13,4 +13,6 @@
     <string name="wrong_email_or_password">Wrong Email or Password</string>
     <string name="email_cannot_be_empty">Email cannot be empty</string>
     <string name="password_cannot_be_empty">Password cannot be empty</string>
+    <string name="address">Address</string>
+    <string name="phone_number">Phone Number</string>
 </resources>
