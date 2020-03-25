@@ -38,6 +38,12 @@ public class FragmentLogin extends Fragment {
 
         sharedPreferenceService = new SPService(getActivity());
 
+        if(sharedPreferenceService.isUserLoggedIn()){
+            Intent i = new Intent(getActivity(), MainActivity.class);
+            startActivity(i);
+            getActivity().finish();
+        }
+
         return view;
     }
 
@@ -76,9 +82,10 @@ public class FragmentLogin extends Fragment {
 
                     JsonObject parsed_response = response.body();
                     JsonObject success_obj = parsed_response.getAsJsonObject("success");
-                    String token = success_obj.get("token").getAsString();
 
-                    sharedPreferenceService.setUserToSp(token);
+                    String storeToSp = success_obj.toString();
+
+                    sharedPreferenceService.setUserToSp(storeToSp);
                     Toasty.success(getContext(), "Successfully Logged in").show();
 
                     Intent i = new Intent(getActivity(), MainActivity.class);

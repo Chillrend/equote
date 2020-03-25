@@ -16,4 +16,8 @@
     <string name="address">Address</string>
     <string name="phone_number">Phone Number</string>
     <string name="all_field_required">Please fill all of the fields</string>
+    <string name="title_activity_rpk">Map</string>
+    <string name="check_email_address_for_confirmation">Check your email address for confirmation</string>
+    <string name="thanks_for_registering">Thanks For Registering</string>
+    <string name="done">DONE</string>
 </resources>

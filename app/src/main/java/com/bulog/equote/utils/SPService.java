@@ -2,6 +2,7 @@ package com.bulog.equote.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.bulog.equote.model.UserModel;
 import com.google.gson.Gson;
 
 public class SPService {
@@ -23,8 +24,8 @@ public class SPService {
     }
 
     //TODO: Bikin pojo isi user detail, ganti String disini ke JSON
-    public String getTokenFromSp(){
-        return user.getString(USER_STRING, null);
+    public UserModel getTokenFromSp(){
+        return gson.fromJson(user.getString(USER_STRING, null), UserModel.class);
     }
 
     //TODO: Set JSON to SP

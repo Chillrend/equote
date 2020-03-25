@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/spacing_large"
+    android:paddingBottom="@dimen/spacing_large"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -23,29 +27,27 @@
         app:layout_constraintTop_toBottomOf="@+id/headerLogo"
         app:layout_constraintStart_toStartOf="parent"
         android:textAppearance="@style/H1_Light_Spacing"
-        android:text="Thanks For Registering"/>
+        android:text="@string/thanks_for_registering"/>
     <TextView
         android:id="@+id/checkemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/congratsregister"
         app:layout_constraintStart_toStartOf="parent"
-        android:textAppearance="@style/H3_Light"
-        android:textSize="18dp"
-        android:text="Check your email address for confirmation"/>
+        android:textAppearance="@style/GeneralFormText"
+        android:text="@string/check_email_address_for_confirmation"/>
 
     <Button
         android:id="@+id/btn_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="300dp"
         android:background="@drawable/background_btn_color_primary"
         android:padding="@dimen/spacing_medium"
-        android:text="DONE"
+        android:text="@string/done"
         android:textAppearance="@style/ButtonTextAppearance"
         android:textColor="#FFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkemail" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

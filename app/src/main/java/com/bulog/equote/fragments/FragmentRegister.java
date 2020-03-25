@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bulog.equote.AuthActivity;
 import com.bulog.equote.MainActivity;
 import com.bulog.equote.R;
 import com.bulog.equote.databinding.RegisterFragmentBinding;
@@ -73,13 +74,12 @@ public class FragmentRegister extends Fragment {
 
                     JsonObject parsed_response = response.body();
                     JsonObject success_obj = parsed_response.getAsJsonObject("success");
-                    String token = success_obj.get("token").getAsString();
+                    String storeToSp = success_obj.toString();
 
-                    sharedPreferenceService.setUserToSp(token);
+                    sharedPreferenceService.setUserToSp(storeToSp);
                     Toasty.success(getContext(), "Successfully Register").show();
 
-                    Intent i = new Intent(getActivity(), MainActivity.class);
-                    startActivity(i);
+                    ((AuthActivity) getActivity()).changeFragment(new FragmentDone(), FragmentDone.FRAGMENT_TAG);
                 }
 
                 @Override

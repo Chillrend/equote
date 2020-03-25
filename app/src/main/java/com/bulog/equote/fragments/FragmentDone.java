@@ -1,5 +1,6 @@
 package com.bulog.equote.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,21 +10,26 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.bulog.equote.MainActivity;
 import com.bulog.equote.R;
+import com.bulog.equote.databinding.DoneFragmentBinding;
 
 public class FragmentDone extends Fragment {
-    Button btn_done;
+    DoneFragmentBinding binding;
+
+    public static final String FRAGMENT_TAG = "FRAGMENT_DONE";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.done_fragment,container,false);
+        binding = DoneFragmentBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        btn_done = view.findViewById(R.id.btn_done);
-        btn_done.setOnClickListener(new View.OnClickListener() {
+        binding.btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
             }
         });
         return view;

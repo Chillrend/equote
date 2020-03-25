@@ -4,6 +4,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.bulog.equote.databinding.ActivityMainBinding;
+import com.bulog.equote.model.UserModel;
 import com.bulog.equote.utils.SPService;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferenceService = new SPService(this);
 
-        String token = sharedPreferenceService.getTokenFromSp();
-        binding.TestTextView.setText("Logged in, Token : " + token);
+        UserModel user = sharedPreferenceService.getTokenFromSp();
+        binding.TestTextView.setText("Logged in, Token : " + user.getToken() + " Name :" + user.getFullname());
     }
 }
