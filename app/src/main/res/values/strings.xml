@@ -20,4 +20,8 @@
     <string name="check_email_address_for_confirmation">Check your email address for confirmation</string>
     <string name="thanks_for_registering">Thanks For Registering</string>
     <string name="done">DONE</string>
+    <string name="rpk_member">Anggota RPK</string>
+    <string name="userTypeRPKDesc">Anggota RPK dapat melihat kiriman penjualan dari anggota lain, lokasi RPK akan ditampilkan pada main menu.</string>
+    <string name="userTypeOtherDesc">User lainnya dapat melihat promosi, informasi produk bulog dan dapat melihat lokasi RPK terdekat</string>
+    <string name="other">Lainnya</string>
 </resources>

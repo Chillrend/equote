@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/spacing_large"
+    android:paddingBottom="@dimen/spacing_large"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -16,7 +20,7 @@
         android:contentDescription="App Logo"/>
 
     <TextView
-        android:id="@+id/greetingsWelcome"
+        android:id="@+id/greetingsFirst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_super_large"
@@ -25,37 +29,91 @@
         android:textAppearance="@style/H1_Light_Spacing"
         android:text="First, We need to know"/>
     <TextView
-        android:id="@+id/greetingsSignIn"
+        android:id="@+id/greetingsWhoYouAre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/greetingsWelcome"
+        app:layout_constraintTop_toBottomOf="@+id/greetingsFirst"
         app:layout_constraintStart_toStartOf="parent"
         android:textAppearance="@style/H3_Light"
         android:text="Who you are."/>
 
-    <RadioGroup
-        android:id="@+id/type_user"
-        android:layout_width="330dp"
-        android:layout_height="207dp"
-        android:layout_marginTop="@dimen/spacing_super_large"
-        android:theme="@style/TextInputLayoutLoginForm"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greetingsSignIn">
-        <RadioButton
-            android:layout_width="wrap_content"
+   <androidx.constraintlayout.widget.ConstraintLayout
+           android:id="@+id/typerRPKContainer"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:padding="@dimen/spacing_medium"
+           android:layout_marginTop="@dimen/spacing_extra_large"
+           app:layout_constraintTop_toBottomOf="@id/greetingsWhoYouAre"
+           app:layout_constraintStart_toStartOf="parent"
+           android:background="@drawable/background_btn_square">
+        <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/ic_rpk_alphaed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+       <TextView
+               android:id="@+id/userTypeRPK"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/spacing_medium"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintToptoTopOf="parent"
+               android:elevation="2dp"
+               android:textAppearance="@style/H5"
+               android:text="@string/rpk_member" />
+       <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/spacing_medium"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/userTypeRPK"
+               android:elevation="2dp"
+               android:textAppearance="@style/Par_Light"
+               android:ellipsize="none"
+               android:maxLines="6"
+               android:scrollHorizontally="false"
+               android:text="@string/userTypeRPKDesc" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/typeOtherContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bulog Employee"
-            android:id="@+id/type_bulog"
-            android:textSize="40px">
-        </RadioButton>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Other"
-            android:id="@+id/type_other"
-            android:textSize="40px">
-        </RadioButton>
-    </RadioGroup>
+            android:layout_marginTop="@dimen/spacing_large"
+            android:padding="@dimen/spacing_medium"
+            app:layout_constraintTop_toBottomOf="@id/typerRPKContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/background_btn_square">
+        <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/ic_other_alphaed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:id="@+id/userTypeOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintToptoTopOf="parent"
+                android:elevation="2dp"
+                android:textAppearance="@style/H5"
+                android:text="@string/other" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userTypeOther"
+                android:elevation="2dp"
+                android:textAppearance="@style/Par_Light"
+                android:ellipsize="none"
+                android:maxLines="6"
+                android:scrollHorizontally="false"
+                android:text="@string/userTypeOtherDesc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <Button
@@ -69,6 +127,6 @@
         android:textAppearance="@style/ButtonTextAppearance"
         android:textColor="#FFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/type_user" />
+        app:layout_constraintTop_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
