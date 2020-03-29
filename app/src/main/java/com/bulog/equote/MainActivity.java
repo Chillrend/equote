@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferenceService = new SPService(this);
 
-        UserModel user = sharedPreferenceService.getTokenFromSp();
+        UserModel user = sharedPreferenceService.getUserFromSp();
         binding.TestTextView.setText("Logged in, Token : " + user.getToken() + " Name :" + user.getFullname());
     }
 }

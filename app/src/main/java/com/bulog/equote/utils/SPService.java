@@ -24,7 +24,7 @@ public class SPService {
     }
 
     //TODO: Bikin pojo isi user detail, ganti String disini ke JSON
-    public UserModel getTokenFromSp(){
+    public UserModel getUserFromSp(){
         return gson.fromJson(user.getString(USER_STRING, null), UserModel.class);
     }
 
