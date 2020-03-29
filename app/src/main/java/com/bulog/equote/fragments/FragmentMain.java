@@ -3,12 +3,18 @@ package com.bulog.equote.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bulog.equote.R;
+import com.bulog.equote.databinding.FragmentMainBinding;
+import com.bulog.equote.model.UserModel;
+import com.bulog.equote.utils.SPService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +34,8 @@ public class FragmentMain extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FragmentMainBinding binding;
+    private SPService sharedPreferenceService;
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,11 +70,22 @@ public class FragmentMain extends Fragment {
         }
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,@NonNull ViewGroup container,@NonNull Bundle savedInstanceState) {
+        binding = FragmentMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+
+        sharedPreferenceService = new SPService(getContext());
+
+        UserModel user = sharedPreferenceService.getUserFromSp();
+        if(user.getFullname()==null){
+            binding.userNameOrLoginButton.setText("Login");
+        }
+        else{
+            binding.userNameOrLoginButton.setText("Logged in,  Name :" + user.getFullname());
+        }
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

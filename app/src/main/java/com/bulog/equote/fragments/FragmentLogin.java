@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 
 import com.bulog.equote.AuthActivity;
+import com.bulog.equote.DrawerActivity;
 import com.bulog.equote.MainActivity;
 import com.bulog.equote.databinding.LoginFragmentBinding;
 import com.bulog.equote.R;
@@ -39,7 +40,7 @@ public class FragmentLogin extends Fragment {
         sharedPreferenceService = new SPService(getActivity());
 
         if(sharedPreferenceService.isUserLoggedIn()){
-            Intent i = new Intent(getActivity(), MainActivity.class);
+            Intent i = new Intent(getActivity(), DrawerActivity.class);
             startActivity(i);
             getActivity().finish();
         }
@@ -88,7 +89,7 @@ public class FragmentLogin extends Fragment {
                     sharedPreferenceService.setUserToSp(storeToSp);
                     Toasty.success(getContext(), "Successfully Logged in").show();
 
-                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    Intent i = new Intent(getActivity(), DrawerActivity.class);
                     startActivity(i);
                 }
 
