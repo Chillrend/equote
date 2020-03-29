@@ -37,7 +37,7 @@
         android:textAppearance="@style/H3_Light"
         android:text="Who you are."/>
 
-   <androidx.constraintlayout.widget.ConstraintLayout
+   <RelativeLayout
            android:id="@+id/typerRPKContainer"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -49,16 +49,14 @@
         <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:srcCompat="@drawable/ic_rpk_alphaed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:srcCompat="@drawable/ic_rpk_alphaed" />
+
        <TextView
                android:id="@+id/userTypeRPK"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_marginStart="@dimen/spacing_medium"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintToptoTopOf="parent"
+
                android:elevation="2dp"
                android:textAppearance="@style/H5"
                android:text="@string/rpk_member" />
@@ -66,17 +64,16 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_marginStart="@dimen/spacing_medium"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/userTypeRPK"
+               android:layout_below="@id/userTypeRPK"
                android:elevation="2dp"
                android:textAppearance="@style/Par_Light"
                android:ellipsize="none"
                android:maxLines="6"
                android:scrollHorizontally="false"
                android:text="@string/userTypeRPKDesc" />
-   </androidx.constraintlayout.widget.ConstraintLayout>
+   </RelativeLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
             android:id="@+id/typeOtherContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,15 +86,12 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 app:srcCompat="@drawable/ic_other_alphaed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                />
         <TextView
                 android:id="@+id/userTypeOther"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintToptoTopOf="parent"
                 android:elevation="2dp"
                 android:textAppearance="@style/H5"
                 android:text="@string/other" />
@@ -105,15 +99,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/userTypeOther"
+                android:layout_below="@id/userTypeOther"
                 android:elevation="2dp"
                 android:textAppearance="@style/Par_Light"
                 android:ellipsize="none"
                 android:maxLines="6"
                 android:scrollHorizontally="false"
                 android:text="@string/userTypeOtherDesc" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 
     <Button
@@ -123,10 +116,10 @@
         android:layout_marginTop="28dp"
         android:background="@drawable/background_btn_color_primary"
         android:padding="@dimen/spacing_medium"
-        android:text="NEXT"
+        android:text="@string/next"
         android:textAppearance="@style/ButtonTextAppearance"
         android:textColor="#FFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

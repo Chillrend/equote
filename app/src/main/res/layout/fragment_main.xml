@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:background="@color/colorPrimary"
+                                                   tools:context=".fragments.FragmentMain">
+
+    <TextView
+            android:id="@+id/greetingsWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/Par_regular"
+            android:text="Selamat Datang" />
+    <TextView
+            android:id="@+id/userNameOrLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_large"
+            app:layout_constraintTop_toBottomOf="@id/greetingsWelcome"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/Light_sub"
+            android:text="Haydar Ardabell" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/userNameOrLoginButton"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/spacing_extra_large"
+            android:layout_marginStart="@dimen/spacing_extra_large"
+            android:layout_marginEnd="@dimen/spacing_extra_large"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_large"
+            android:weightSum="1.0"
+            android:elevation="2dp"
+            android:background="@drawable/background_menu_wrapper">
+        <LinearLayout
+                android:id="@+id/btnBuy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_weight="0.25"
+                android:orientation="vertical">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small"
+                    app:srcCompat="@drawable/ic_cart_outline"
+                    android:elevation="3dp"
+                    android:background="@drawable/background_mainmenu_imgbtn"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:text="Beli"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/btnSell"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_weight="0.25"
+                android:orientation="vertical">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small"
+                    app:srcCompat="@drawable/ic_cart_outline"
+                    android:elevation="3dp"
+                    android:background="@drawable/background_mainmenu_imgbtn"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:text="Jual"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/btnInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_weight="0.25"
+                android:orientation="vertical">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small"
+                    app:srcCompat="@drawable/ic_cart_outline"
+                    android:elevation="3dp"
+                    android:background="@drawable/background_mainmenu_imgbtn"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:text="Info"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/btnCallCenter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_weight="0.25"
+                android:orientation="vertical">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small"
+                    app:srcCompat="@drawable/ic_cart_outline"
+                    android:elevation="3dp"
+                    android:background="@drawable/background_mainmenu_imgbtn"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:text="Hubungi"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
