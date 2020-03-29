@@ -52,9 +52,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/spacing_small"
-                    app:srcCompat="@drawable/ic_cart_outline"
                     android:elevation="3dp"
-                    android:background="@drawable/background_mainmenu_imgbtn"/>
+                    android:background="@drawable/button_background"
+                    android:src="@drawable/ic_cart_outline"
+
+                />
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,12 +73,12 @@
                 android:layout_weight="0.25"
                 android:orientation="vertical">
             <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_small"
-                    app:srcCompat="@drawable/ic_cart_outline"
-                    android:elevation="3dp"
-                    android:background="@drawable/background_mainmenu_imgbtn"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_small"
+                android:elevation="3dp"
+                android:background="@drawable/button_backgroundjual"
+                android:src="@drawable/ic_cart_arrow_up"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,12 +95,12 @@
                 android:layout_weight="0.25"
                 android:orientation="vertical">
             <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_small"
-                    app:srcCompat="@drawable/ic_cart_outline"
-                    android:elevation="3dp"
-                    android:background="@drawable/background_mainmenu_imgbtn"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_small"
+                android:elevation="3dp"
+                android:background="@drawable/button_backgroundinfo"
+                android:src="@drawable/ic_information_variant"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,12 +117,12 @@
                 android:layout_weight="0.25"
                 android:orientation="vertical">
             <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_small"
-                    app:srcCompat="@drawable/ic_cart_outline"
-                    android:elevation="3dp"
-                    android:background="@drawable/background_mainmenu_imgbtn"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_small"
+                android:elevation="3dp"
+                android:background="@drawable/button_backgroundhub"
+                android:src="@drawable/ic_phone"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
