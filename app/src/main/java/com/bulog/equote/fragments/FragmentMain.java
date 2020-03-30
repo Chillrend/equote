@@ -1,6 +1,7 @@
 package com.bulog.equote.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bulog.equote.AuthActivity;
 import com.bulog.equote.R;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.UserModel;
@@ -79,11 +81,16 @@ public class FragmentMain extends Fragment {
         sharedPreferenceService = new SPService(getContext());
 
         UserModel user = sharedPreferenceService.getUserFromSp();
+
         if(user.getFullname()==null){
-            binding.userNameOrLoginButton.setText("Login");
+            binding.userNameOrLoginButton.setText(R.string.login);
+            binding.userNameOrLoginButton.setOnClickListener(v -> {
+                Intent i = new Intent(getActivity(), AuthActivity.class);
+                startActivity(i);
+            });
         }
         else{
-            binding.userNameOrLoginButton.setText("Logged in,  Name :" + user.getFullname());
+            binding.userNameOrLoginButton.setText(user.getFullname());
         }
         return view;
     }
