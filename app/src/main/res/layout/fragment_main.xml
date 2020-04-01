@@ -28,6 +28,7 @@
             android:text="Login" />
 
     <LinearLayout
+            android:id="@+id/main_menu_button_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/userNameOrLoginButton"
@@ -131,6 +132,48 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/map_see_more_button_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_menu_button_wrapper">
+        <TextView
+                android:id="@+id/rpk_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/H5"
+                android:text="Rumah Pangan Kita" />
+        <TextView
+                android:id="@+id/see_closest_rpk_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rpk_tv"
+                android:textAppearance="@style/Par_Light"
+                android:text="@string/find_closest_rpk_from_your_location" />
+        <TextView
+                android:id="@+id/see_more_map_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textAppearance="@dimen/par"
+                android:textColor="@color/colorAccent"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_orange_24dp"
+                android:text="@string/see"/>
+    </RelativeLayout>
+    <fragment
+            android:id="@+id/rpk_main_menu_map"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintTop_toBottomOf="@id/map_see_more_button_wrapper"
+            app:layout_constraintStart_toStartOf="parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

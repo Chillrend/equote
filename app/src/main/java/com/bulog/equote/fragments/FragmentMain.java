@@ -17,6 +17,9 @@ import com.bulog.equote.R;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.UserModel;
 import com.bulog.equote.utils.SPService;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +29,7 @@ import com.bulog.equote.utils.SPService;
  * Use the {@link FragmentMain#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment {
+public class FragmentMain extends Fragment implements OnMapReadyCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,6 +41,7 @@ public class FragmentMain extends Fragment {
     private String mParam2;
     private FragmentMainBinding binding;
     private SPService sharedPreferenceService;
+    private GoogleMap rpkMap;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,21 +82,31 @@ public class FragmentMain extends Fragment {
         binding = FragmentMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
         sharedPreferenceService = new SPService(getContext());
 
         UserModel user = sharedPreferenceService.getUserFromSp();
 
-        if(user.getFullname()==null){
+        if(user == null){
             binding.userNameOrLoginButton.setText(R.string.login);
             binding.userNameOrLoginButton.setOnClickListener(v -> {
                 Intent i = new Intent(getActivity(), AuthActivity.class);
                 startActivity(i);
             });
-        }
-        else{
+        }else{
             binding.userNameOrLoginButton.setText(user.getFullname());
         }
-        return view;
+
+        if(rpkMap == null){
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
+            mapFragment.getMapAsync(this);
+        }
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -117,6 +131,19 @@ public class FragmentMain extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        rpkMap = googleMap;
+
+        LatLng sydney = new LatLng(-34, 151);
+        rpkMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        rpkMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        UiSettings configs = rpkMap.getUiSettings();
+        configs.setMapToolbarEnabled(false);
+        configs.setZoomControlsEnabled(false);
     }
 
     /**
