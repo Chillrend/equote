@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.airbnb.android:lottie:3.1.0'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+    implementation  'com.github.Kennyc1012:MultiStateView:2.1.2'
 
     implementation 'com.google.android.material:material:1.1.0'
 

@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.bulog.equote.DrawerActivity;
 import com.bulog.equote.MainActivity;
 import com.bulog.equote.R;
 import com.bulog.equote.databinding.DoneFragmentBinding;
@@ -28,7 +29,7 @@ public class FragmentDone extends Fragment {
         binding.btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), MainActivity.class);
+                Intent i = new Intent(getActivity(), DrawerActivity.class);
                 startActivity(i);
             }
         });

@@ -11,7 +11,6 @@
             android:id="@+id/greetingsWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_extra_large"
             android:layout_marginStart="@dimen/spacing_large"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +32,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/userNameOrLoginButton"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_extra_large"
             android:layout_marginEnd="@dimen/spacing_extra_large"
             android:orientation="horizontal"
@@ -161,19 +160,30 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:textAppearance="@dimen/par"
+                android:textAppearance="@style/Par_regular"
                 android:textColor="@color/colorAccent"
                 android:drawableEnd="@drawable/ic_keyboard_arrow_right_orange_24dp"
                 android:text="@string/see"/>
     </RelativeLayout>
-    <fragment
-            android:id="@+id/rpk_main_menu_map"
+    <com.kennyc.view.MultiStateView
+            android:id="@+id/map_multistateview"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="@dimen/spacing_small"
             app:layout_constraintTop_toBottomOf="@id/map_see_more_button_wrapper"
             app:layout_constraintStart_toStartOf="parent"
-            android:name="com.google.android.gms.maps.SupportMapFragment"/>
+            app:msv_errorView="@layout/multistate_error_mainmenu_map">
+        <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <fragment
+                    android:id="@+id/rpk_main_menu_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+    </com.kennyc.view.MultiStateView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

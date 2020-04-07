@@ -1,12 +1,21 @@
 package com.bulog.equote.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +25,12 @@ import com.bulog.equote.AuthActivity;
 import com.bulog.equote.R;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.UserModel;
+import com.bulog.equote.utils.GPSTracker;
 import com.bulog.equote.utils.SPService;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.kennyc.view.MultiStateView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +54,11 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     private SPService sharedPreferenceService;
     private GoogleMap rpkMap;
 
+    private GPSTracker gpsTracker;
+    private GPSTracker.LocationResult locationResult;
+
     private OnFragmentInteractionListener mListener;
+    private Location location;
 
     public FragmentMain() {
         // Required empty public constructor
@@ -80,9 +95,8 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@NonNull ViewGroup container,@NonNull Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -101,12 +115,83 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
             binding.userNameOrLoginButton.setText(user.getFullname());
         }
 
-        if(rpkMap == null){
-            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
-            mapFragment.getMapAsync(this);
+        locationResult = new GPSTracker.LocationResult() {
+            @Override
+            public void gotLocation(Location location) {
+                //TODO: Init map
+                binding.shimmerMap.stopShimmer();
+
+                FragmentMain.this.location = location;
+                if(rpkMap == null){
+                    SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
+                    mapFragment.getMapAsync(FragmentMain.this::onMapReady);
+                }
+            }
+        };
+
+        gpsTracker = new GPSTracker();
+
+        checkForLocationPermission();
+    }
+
+    public void checkForLocationPermission(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                gpsTracker.getLocation(getActivity(), locationResult);
+            }else{
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 10);
+            }
+        }else{
+            gpsTracker.getLocation(getActivity(), locationResult);
         }
+    }
 
+    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if(requestCode == 10){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                gpsTracker.getLocation(getActivity(), locationResult);
+            }else{
+                if(!ActivityCompat.shouldShowRequestPermissionRationale((Activity) getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)){
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                    dialogBuilder.setTitle(getString(R.string.permission_required));
+                    dialogBuilder.setCancelable(false);
+                    dialogBuilder.setMessage(getString(R.string.permission_required_message));
+                    dialogBuilder.setPositiveButton(getString(R.string.settings), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", getContext().getPackageName(), null));
+                            startActivityForResult(i, 1001);
+                        }
+                    });
+                    dialogBuilder.create().show();
+                }
+
+                binding.mapMultistateview.setViewState(MultiStateView.ViewState.ERROR);
+            }
+        }
+    }
+
+    public void startActivityForResult(Intent intent, int requestCode){
+        super.startActivityForResult(intent, requestCode);
+
+        switch (requestCode){
+            case 1001:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                        gpsTracker.getLocation(getActivity(), locationResult);
+                    }
+
+                }else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},10);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,9 +222,9 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         rpkMap = googleMap;
 
-        LatLng sydney = new LatLng(-34, 151);
-        rpkMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        rpkMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng pos = new LatLng(location.getLongitude(), location.getLatitude());
+        rpkMap.addMarker(new MarkerOptions().position(pos).title("hello"));
+        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 13));
 
         UiSettings configs = rpkMap.getUiSettings();
         configs.setMapToolbarEnabled(false);

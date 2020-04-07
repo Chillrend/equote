@@ -38,4 +38,7 @@
     <string name="login">Login</string>
     <string name="find_closest_rpk_from_your_location">Temukan RPK terdekat dari lokasi Anda</string>
     <string name="see">Lihat</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="permission_required_message">Kami membutuhkan lokasi Anda untuk mengambil koordinat lokasi RPK terdekat</string>
+    <string name="settings">Pengaturan</string>
 </resources>
