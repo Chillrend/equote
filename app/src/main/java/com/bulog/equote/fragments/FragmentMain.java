@@ -7,15 +7,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Camera;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.provider.Settings;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +31,22 @@ import android.view.ViewGroup;
 import com.bulog.equote.AuthActivity;
 import com.bulog.equote.R;
 import com.bulog.equote.databinding.FragmentMainBinding;
+import com.bulog.equote.model.RPKMap;
 import com.bulog.equote.model.UserModel;
+import com.bulog.equote.utils.ApiCall;
+import com.bulog.equote.utils.ApiService;
 import com.bulog.equote.utils.GPSTracker;
 import com.bulog.equote.utils.SPService;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.*;
 import com.kennyc.view.MultiStateView;
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -118,20 +134,66 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         locationResult = new GPSTracker.LocationResult() {
             @Override
             public void gotLocation(Location location) {
-                //TODO: Init map
+                binding.shimmerMap.hideShimmer();
                 binding.shimmerMap.stopShimmer();
+                binding.shimmerMap.clearAnimation();
+
+                LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
+                Marker marker = rpkMap.addMarker(new MarkerOptions().position(userPos).icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_directions_walk_orange_24dp)));
+
+                ApiService service = ApiCall.getClient().create(ApiService.class);
+                Call<List<RPKMap>> call = service.searchNearestRPK(location.getLatitude(), location.getLongitude());
+                call.enqueue(new Callback<List<RPKMap>>() {
+                    @Override
+                    public void onResponse(Call<List<RPKMap>> call, Response<List<RPKMap>> response) {
+                        if(response.errorBody() != null) return;
+
+                        BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_rpk_symetric);
+                        Bitmap smallb = Bitmap.createScaledBitmap(bd.getBitmap(), 100, 100, false);
+                        BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(smallb);
+
+                        List<Marker> markers = new ArrayList<>();
+                        LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
+
+                        List<RPKMap> nearestRPK = response.body();
+                        for (RPKMap rpk : nearestRPK) {
+                            LatLng pos = new LatLng(Double.parseDouble(rpk.getLatitude()), Double.parseDouble(rpk.getLongitude()));
+                            Marker marker = rpkMap.addMarker(new MarkerOptions().title(rpk.getNamaRpk()).position(pos).icon(markerIcon));
+                            boundBuilder.include(marker.getPosition());
+                        }
+                        LatLngBounds bounds = boundBuilder.build();
+                        CameraUpdate camera = CameraUpdateFactory.newLatLngBounds(bounds, 20);
+                        rpkMap.animateCamera(camera);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<RPKMap>> call, Throwable t) {
+                        Toasty.error(getContext(), R.string.err_general_api_error, Toasty.LENGTH_LONG).show();
+                    }
+                });
 
                 FragmentMain.this.location = location;
-                if(rpkMap == null){
-                    SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
-                    mapFragment.getMapAsync(FragmentMain.this::onMapReady);
-                }
+                LatLng coord = new LatLng(location.getLatitude(), location.getLongitude());
+                rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coord, 15));
             }
         };
 
         gpsTracker = new GPSTracker();
 
-        checkForLocationPermission();
+        if(rpkMap == null){
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
+            mapFragment.getMapAsync(FragmentMain.this::onMapReady);
+        }
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
+
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
+
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     public void checkForLocationPermission(){
@@ -222,9 +284,9 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         rpkMap = googleMap;
 
-        LatLng pos = new LatLng(location.getLongitude(), location.getLatitude());
-        rpkMap.addMarker(new MarkerOptions().position(pos).title("hello"));
-        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 13));
+        LatLng pos = new LatLng(0.7893, 113.9213);
+        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 11));
+        checkForLocationPermission();
 
         UiSettings configs = rpkMap.getUiSettings();
         configs.setMapToolbarEnabled(false);
