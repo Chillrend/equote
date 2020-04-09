@@ -14,7 +14,10 @@
             android:layout_marginStart="@dimen/spacing_large"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:textAppearance="@style/Par_regular"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:text="Selamat Datang" />
     <TextView
             android:id="@+id/userNameOrLoginButton"
@@ -23,7 +26,9 @@
             android:layout_marginStart="@dimen/spacing_large"
             app:layout_constraintTop_toBottomOf="@id/greetingsWelcome"
             app:layout_constraintStart_toStartOf="parent"
-            android:textAppearance="@style/Light_sub"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
             android:text="Login" />
 
     <LinearLayout
@@ -33,12 +38,12 @@
             app:layout_constraintTop_toBottomOf="@id/userNameOrLoginButton"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_extra_large"
-            android:layout_marginEnd="@dimen/spacing_extra_large"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
             android:orientation="horizontal"
             android:padding="@dimen/spacing_large"
             android:weightSum="1.0"
-            android:elevation="2dp"
+            android:elevation="1dp"
             android:background="@drawable/background_menu_wrapper">
         <LinearLayout
                 android:id="@+id/btnBuy"
@@ -146,6 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/H5"
+                android:textStyle="bold"
                 android:text="Rumah Pangan Kita" />
         <TextView
                 android:id="@+id/see_closest_rpk_tv"

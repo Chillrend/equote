@@ -2,6 +2,7 @@ package com.bulog.equote;
 
 import android.net.Uri;
 import android.os.Bundle;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -31,6 +32,10 @@ public class DrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setElevation(0);
         setSupportActionBar(toolbar);
+        ActionBar abar = getSupportActionBar();
+        abar.setDisplayOptions(abar.getDisplayOptions() | ActionBar.DISPLAY_SHOW_CUSTOM);
+        abar.setDisplayShowTitleEnabled(false);
+        abar.setDisplayShowCustomEnabled(true);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

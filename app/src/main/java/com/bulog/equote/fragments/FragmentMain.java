@@ -162,7 +162,7 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
                             boundBuilder.include(marker.getPosition());
                         }
                         LatLngBounds bounds = boundBuilder.build();
-                        CameraUpdate camera = CameraUpdateFactory.newLatLngBounds(bounds, 20);
+                        CameraUpdate camera = CameraUpdateFactory.newLatLngBounds(bounds, 0);
                         rpkMap.animateCamera(camera);
                     }
 
