@@ -34,8 +34,10 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.1.0'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation  'com.github.Kennyc1012:MultiStateView:2.1.2'
+    implementation 'com.github.jama5262:CarouselView:1.1.0'
+    compile 'com.makeramen:roundedimageview:2.3.0'
 
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
 
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'

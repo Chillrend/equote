@@ -13,11 +13,13 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.provider.Settings;
+import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +41,10 @@ import com.bulog.equote.utils.GPSTracker;
 import com.bulog.equote.utils.SPService;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.jama.carouselview.CarouselViewListener;
 import com.kennyc.view.MultiStateView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -184,6 +189,21 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
             SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
             mapFragment.getMapAsync(FragmentMain.this::onMapReady);
         }
+
+        //TODO: REMOVE THIS AFTER CALLING IMAGE FROM API
+        int[] images = {R.drawable.promo_1, R.drawable.promo_2, R.drawable.promo_3};
+
+        binding.promoCarouselview.setSize(images.length);
+        binding.promoCarouselview.setResource(R.layout.promo_recyclerview_layout);
+        binding.promoCarouselview.setCarouselViewListener(new CarouselViewListener() {
+            @Override
+            public void onBindView(View view, int i) {
+                ImageView imageView = view.findViewById(R.id.promo_layout_imageview);
+                //TODO: Change to setImageBitmap with corresponding promo image from API
+                imageView.setImageDrawable(getResources().getDrawable(images[i]));
+            }
+        });
+        binding.promoCarouselview.show();
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {

@@ -1,195 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                       xmlns:tools="http://schemas.android.com/tools"
-                                                       android:layout_width="match_parent"
-                                                       android:layout_height="match_parent"
-                                                       xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                       android:background="@color/colorPrimary"
-                                                       tools:context=".fragments.FragmentMain">
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".fragments.FragmentMain">
 
-    <TextView
-            android:id="@+id/greetingsWelcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_large"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:text="Selamat Datang" />
-    <TextView
-            android:id="@+id/userNameOrLoginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_large"
-            app:layout_constraintTop_toBottomOf="@id/greetingsWelcome"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/black"
-            android:text="Login" />
-
-    <LinearLayout
-            android:id="@+id/main_menu_button_wrapper"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/userNameOrLoginButton"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_large"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_large"
-            android:weightSum="1.0"
-            android:elevation="1dp"
-            android:background="@drawable/background_menu_wrapper">
-        <LinearLayout
-                android:id="@+id/btnBuy"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center_horizontal|center_vertical"
-                android:layout_weight="0.25"
-                android:orientation="vertical">
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_small"
-                    android:elevation="3dp"
-                    android:background="@drawable/button_background"
-                    android:src="@drawable/ic_cart_outline"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
 
-                />
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/H5"
-                    android:text="Beli"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/btnSell"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center_horizontal|center_vertical"
-                android:layout_weight="0.25"
-                android:orientation="vertical">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_small"
-                android:elevation="3dp"
-                android:background="@drawable/button_backgroundjual"
-                android:src="@drawable/ic_cart_arrow_up"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/H5"
-                    android:text="Jual"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/btnInfo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center_horizontal|center_vertical"
-                android:layout_weight="0.25"
-                android:orientation="vertical">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_small"
-                android:elevation="3dp"
-                android:background="@drawable/button_backgroundinfo"
-                android:src="@drawable/ic_information_variant"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/H5"
-                    android:text="Info"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/btnCallCenter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center_horizontal|center_vertical"
-                android:layout_weight="0.25"
-                android:orientation="vertical">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_small"
-                android:elevation="3dp"
-                android:background="@drawable/button_backgroundhub"
-                android:src="@drawable/ic_phone"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/H5"
-                    android:text="Hubungi"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout
-            android:id="@+id/map_see_more_button_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_large"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_menu_button_wrapper">
         <TextView
-                android:id="@+id/rpk_tv"
+                android:id="@+id/greetingsWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/H5"
+                android:layout_marginStart="@dimen/spacing_large"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
                 android:textStyle="bold"
-                android:text="Rumah Pangan Kita" />
+                android:textColor="@color/black"
+                android:text="Selamat Datang"/>
+
         <TextView
-                android:id="@+id/see_closest_rpk_tv"
+                android:id="@+id/userNameOrLoginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rpk_tv"
-                android:textAppearance="@style/Par_Light"
-                android:text="@string/find_closest_rpk_from_your_location" />
-        <TextView
-                android:id="@+id/see_more_map_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:textAppearance="@style/Par_regular"
-                android:textColor="@color/colorAccent"
-                android:drawableEnd="@drawable/ic_keyboard_arrow_right_orange_24dp"
-                android:text="@string/see"/>
-    </RelativeLayout>
-    <com.kennyc.view.MultiStateView
-            android:id="@+id/map_multistateview"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="@dimen/spacing_small"
-            app:layout_constraintTop_toBottomOf="@id/map_see_more_button_wrapper"
-            app:layout_constraintStart_toStartOf="parent"
-            app:msv_errorView="@layout/multistate_error_mainmenu_map">
-        <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer_map"
+                android:layout_marginStart="@dimen/spacing_large"
+                app:layout_constraintTop_toBottomOf="@id/greetingsWelcome"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/black"
+                android:text="Login"/>
+
+        <LinearLayout
+                android:id="@+id/main_menu_button_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <fragment
-                    android:id="@+id/rpk_main_menu_map"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/userNameOrLoginButton"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_large"
+                android:weightSum="1.0"
+                android:elevation="1dp"
+                android:background="@drawable/background_menu_wrapper">
+
+            <LinearLayout
+                    android:id="@+id/btnBuy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_small"
+                        android:elevation="3dp"
+                        android:background="@drawable/button_background"
+                        android:src="@drawable/ic_cart_outline"
+
+                        />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/H5"
+                        android:text="Beli"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/btnSell"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_small"
+                        android:elevation="3dp"
+                        android:background="@drawable/button_backgroundjual"
+                        android:src="@drawable/ic_cart_arrow_up"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/H5"
+                        android:text="Jual"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/btnInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_small"
+                        android:elevation="3dp"
+                        android:background="@drawable/button_backgroundinfo"
+                        android:src="@drawable/ic_information_variant"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/H5"
+                        android:text="Info"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/btnCallCenter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_small"
+                        android:elevation="3dp"
+                        android:background="@drawable/button_backgroundhub"
+                        android:src="@drawable/ic_phone"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/H5"
+                        android:text="Hubungi"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+                android:id="@+id/map_see_more_button_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_menu_button_wrapper">
+
+            <TextView
+                    android:id="@+id/rpk_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:textStyle="bold"
+                    android:text="Rumah Pangan Kita"/>
+
+            <TextView
+                    android:id="@+id/see_closest_rpk_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rpk_tv"
+                    android:textAppearance="@style/Par_Light"
+                    android:text="@string/find_closest_rpk_from_your_location"/>
+
+            <TextView
+                    android:id="@+id/see_more_map_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/Par_regular"
+                    android:textColor="@color/colorAccent"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right_orange_24dp"
+                    android:text="@string/see"/>
+        </RelativeLayout>
+
+        <com.kennyc.view.MultiStateView
+                android:id="@+id/map_multistateview"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="@dimen/spacing_small"
+                app:layout_constraintTop_toBottomOf="@id/map_see_more_button_wrapper"
+                app:layout_constraintStart_toStartOf="parent"
+                app:msv_errorView="@layout/multistate_error_mainmenu_map">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_map"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"/>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-    </com.kennyc.view.MultiStateView>
+                    android:layout_height="match_parent">
 
+                <fragment
+                        android:id="@+id/rpk_main_menu_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </com.kennyc.view.MultiStateView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+                android:id="@+id/promotion_tv_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/map_multistateview">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:textStyle="bold"
+                    android:text="@string/promotion"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Par_Light"
+                    android:text="@string/promo_tagline"/>
+        </LinearLayout>
+        
+        <LinearLayout
+                android:id="@+id/promo_carousel_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/promotion_tv_wrapper">
+
+            <com.jama.carouselview.CarouselView
+                    android:id="@+id/promo_carouselview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:carouselOffset="center"
+                    app:scaleOnScroll="true"
+                    app:spacing="-35"
+                    app:indicatorSelectedColor="@color/colorAccent"
+                    app:indicatorAnimationType="worm" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
