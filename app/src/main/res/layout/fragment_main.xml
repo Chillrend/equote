@@ -260,5 +260,68 @@
                     app:indicatorAnimationType="worm" />
 
         </LinearLayout>
+
+        <RelativeLayout
+                android:id="@+id/product_see_more_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/promo_carousel_wrapper">
+
+            <TextView
+                    android:id="@+id/product_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/H5"
+                    android:textStyle="bold"
+                    android:text="@string/get_to_know_bulog_food_product"/>
+
+            <TextView
+                    android:id="@+id/get_to_know_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/product_tv"
+                    android:textAppearance="@style/MainMenuSubLight"
+                    android:text="@string/get_to_know_bulog_food_from_indonesia"/>
+
+            <TextView
+                    android:id="@+id/see_more_product_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/Par_regular"
+                    android:textColor="@color/colorAccent"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right_orange_24dp"
+                    android:text="@string/see"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/white"
+                android:layout_marginTop="@dimen/spacing_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/product_see_more_wrapper">
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/productTabLayout_mainmenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabIndicatorColor="@color/colorAccent"
+                    app:tabIndicatorHeight="3dp" />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DFDFDF"/>
+            <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/productViewPager_mainmenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

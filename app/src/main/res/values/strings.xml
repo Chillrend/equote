@@ -44,4 +44,6 @@
     <string name="err_general_api_error">Failed to retrieve data from server, please try again.</string>
     <string name="promotion">Promosi</string>
     <string name="promo_tagline">Dapatkan promo terbaru bulog hanya dalam aplikasi BulogKita!</string>
+    <string name="get_to_know_bulog_food_product">Kenali Produk Pangan Bulog</string>
+    <string name="get_to_know_bulog_food_from_indonesia">Kenali produk pangan bulog hasil panen petani Indonesia</string>
 </resources>

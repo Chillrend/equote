@@ -8,12 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,8 +30,11 @@ import android.view.ViewGroup;
 
 import com.bulog.equote.AuthActivity;
 import com.bulog.equote.R;
+import com.bulog.equote.adapter.MainMenuTabAdapter;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.RPKMap;
+import com.bulog.equote.model.smallproduct.DataSmallProduct;
+import com.bulog.equote.model.smallproduct.SmallProduct;
 import com.bulog.equote.model.UserModel;
 import com.bulog.equote.utils.ApiCall;
 import com.bulog.equote.utils.ApiService;
@@ -41,16 +42,17 @@ import com.bulog.equote.utils.GPSTracker;
 import com.bulog.equote.utils.SPService;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.jama.carouselview.CarouselViewListener;
 import com.kennyc.view.MultiStateView;
-import com.makeramen.roundedimageview.RoundedImageView;
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -81,6 +83,9 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     private OnFragmentInteractionListener mListener;
     private Location location;
 
+    //TODO: Remove this after retrieving data from API
+    private ArrayList<DataSmallProduct> mockData = new ArrayList<>();
+
     public FragmentMain() {
         // Required empty public constructor
     }
@@ -110,6 +115,19 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        //Initialize mock data for viewpager
+        //TODO: Remove this after retrieving product data from API
+        ArrayList<SmallProduct> beras = new ArrayList<>();
+        beras.add(new SmallProduct("1", "BerasKita", "BerasKita Beras komunis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
+        beras.add(new SmallProduct("2", "BerasKitaSachet", "BerasKita Beras komunis tapi kecil aweokwaek", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beceng.png", "beras"));
+
+        ArrayList<SmallProduct> minyak = new ArrayList<>();
+        beras.add(new SmallProduct("4", "MinyakKita", "MinyakKita minyak komunis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
+        beras.add(new SmallProduct("5", "MinyakSaya", "MinyakSaya minyak kapitalis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
+
+        mockData.add(new DataSmallProduct("beras", beras));
+        mockData.add(new DataSmallProduct("minyak", minyak));
     }
 
     @Nullable
@@ -204,6 +222,20 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
             }
         });
         binding.promoCarouselview.show();
+
+
+        MainMenuTabAdapter pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), mockData);
+        binding.productViewPagerMainmenu.setAdapter(pageAdapter);
+        binding.productViewPagerMainmenu.setOffscreenPageLimit(1);
+
+        binding.productTabLayoutMainmenu.setTabMode(TabLayout.MODE_SCROLLABLE);
+        TabLayoutMediator mediator = new TabLayoutMediator(binding.productTabLayoutMainmenu, binding.productViewPagerMainmenu, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int i) {
+                tab.setText(mockData.get(i).getCategory());
+            }
+        });
+        mediator.attach();
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.bulog.equote.fragments.FragmentMain;
+import com.bulog.equote.fragments.MainMenuProductTab;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
@@ -20,7 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class DrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentMain.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentMain.OnFragmentInteractionListener, MainMenuProductTab.OnFragmentInteractionListener {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
