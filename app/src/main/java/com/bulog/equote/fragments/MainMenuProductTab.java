@@ -65,6 +65,11 @@ public class MainMenuProductTab extends Fragment {
         return inflater.inflate(R.layout.fragment_main_menu_product_tab, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

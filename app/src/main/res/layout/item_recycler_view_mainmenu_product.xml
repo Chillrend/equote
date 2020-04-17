@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   android:orientation="vertical"
+                                   android:layout_width="250dp"
+                                   android:layout_height="100dp"
+                                   app:cardBackgroundColor="@color/colorAccent"
+                                   app:cardCornerRadius="10dp">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_small"
+            android:layout_gravity="center_vertical|center_horizontal"
+            >
+        <ImageView
+                android:id="@+id/rv_product_image"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:padding="@dimen/spacing_small"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_beras"/>
+        <TextView
+                android:id="@+id/rv_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/rv_product_image"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:text="Beras Kita"/>
+        <TextView
+                android:id="@+id/rv_product_short_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/rv_product_image"
+                android:layout_below="@id/rv_product_name"
+                android:textAppearance="@style/Par_Light"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:text="Tagline Beras Keluarga Indonesia Beras jenis premium produksi dalam negeri jenis IR64 bertekstur nasi pulen dengan kadar amilosa rendah dan amilopektin tinggi. "/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
