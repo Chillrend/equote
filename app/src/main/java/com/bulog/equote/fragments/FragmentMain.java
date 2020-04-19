@@ -16,7 +16,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -44,6 +46,7 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
 import com.jama.carouselview.CarouselViewListener;
 import com.kennyc.view.MultiStateView;
 import es.dmoral.toasty.Toasty;
@@ -123,11 +126,14 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         beras.add(new SmallProduct("2", "BerasKitaSachet", "BerasKita Beras komunis tapi kecil aweokwaek", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beceng.png", "beras"));
 
         ArrayList<SmallProduct> minyak = new ArrayList<>();
-        beras.add(new SmallProduct("4", "MinyakKita", "MinyakKita minyak komunis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
-        beras.add(new SmallProduct("5", "MinyakSaya", "MinyakSaya minyak kapitalis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
+        minyak.add(new SmallProduct("4", "MinyakKita", "MinyakKita minyak komunis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
+        minyak.add(new SmallProduct("5", "MinyakSaya", "MinyakSaya minyak kapitalis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
 
         mockData.add(new DataSmallProduct("beras", beras));
         mockData.add(new DataSmallProduct("minyak", minyak));
+
+        Gson gson = new Gson();
+        Log.i("data :", gson.toJson(mockData));
     }
 
     @Nullable
@@ -223,10 +229,10 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         });
         binding.promoCarouselview.show();
 
-
         MainMenuTabAdapter pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), mockData);
         binding.productViewPagerMainmenu.setAdapter(pageAdapter);
-        binding.productViewPagerMainmenu.setOffscreenPageLimit(1);
+        binding.productViewPagerMainmenu.setUserInputEnabled(false);
+        binding.productViewPagerMainmenu.setOffscreenPageLimit(4);
 
         binding.productTabLayoutMainmenu.setTabMode(TabLayout.MODE_SCROLLABLE);
         TabLayoutMediator mediator = new TabLayoutMediator(binding.productTabLayoutMainmenu, binding.productViewPagerMainmenu, new TabLayoutMediator.TabConfigurationStrategy() {

@@ -1,9 +1,11 @@
 package com.bulog.equote.adapter;
 
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -23,10 +25,9 @@ public class MainMenuTabAdapter extends FragmentStateAdapter {
     }
 
     @Override
-    @NonNull
     public Fragment createFragment(int pos){
-        DataSmallProduct data = products.get(pos);
-        return MainMenuProductTab.newInstance(data.getProducts());
+        DataSmallProduct product = products.get(pos);
+        return MainMenuProductTab.newInstance(product.getProducts());
     }
 
     @Override

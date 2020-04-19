@@ -8,8 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bulog.equote.R;
+import com.bulog.equote.adapter.MainMenuProductAdapter;
+import com.bulog.equote.databinding.FragmentMainMenuProductTabBinding;
 import com.bulog.equote.model.smallproduct.SmallProduct;
+import es.dmoral.toasty.Toasty;
 
 import java.util.ArrayList;
 
@@ -21,7 +26,7 @@ import java.util.ArrayList;
  * Use the {@link MainMenuProductTab#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainMenuProductTab extends Fragment {
+public class MainMenuProductTab extends Fragment implements MainMenuProductAdapter.OnMainMenuProductClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM_PRODUCT_LIST = "LIST_OF_PRODUCT";
@@ -30,6 +35,9 @@ public class MainMenuProductTab extends Fragment {
     private ArrayList<SmallProduct> productList;
 
     private OnFragmentInteractionListener mListener;
+    private FragmentMainMenuProductTabBinding binding;
+    private RecyclerView.LayoutManager layoutManager;
+    private MainMenuProductAdapter adapter;
 
     public MainMenuProductTab() {
         // Required empty public constructor
@@ -47,6 +55,7 @@ public class MainMenuProductTab extends Fragment {
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_PARAM_PRODUCT_LIST, products);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -61,13 +70,18 @@ public class MainMenuProductTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_menu_product_tab, container, false);
+        binding = FragmentMainMenuProductTabBinding.inflate(getLayoutInflater());
+
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.mainMenuProductRecyclerview.setLayoutManager(layoutManager);
 
+        adapter = new MainMenuProductAdapter(productList, getContext(), this::onProductClick);
+        binding.mainMenuProductRecyclerview.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +106,13 @@ public class MainMenuProductTab extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onProductClick(int pos) {
+        //TODO: Go to Detail Product Activity/Fragment, passing the corresponding item in the ArrayList
+        SmallProduct sp = productList.get(pos);
+        Toasty.info(getContext(), "Clicked :" + sp.getProductName(), Toasty.LENGTH_LONG).show();
     }
 
     /**
