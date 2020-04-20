@@ -132,8 +132,6 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         mockData.add(new DataSmallProduct("beras", beras));
         mockData.add(new DataSmallProduct("minyak", minyak));
 
-        Gson gson = new Gson();
-        Log.i("data :", gson.toJson(mockData));
     }
 
     @Nullable
@@ -163,9 +161,6 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         locationResult = new GPSTracker.LocationResult() {
             @Override
             public void gotLocation(Location location) {
-                binding.shimmerMap.hideShimmer();
-                binding.shimmerMap.stopShimmer();
-                binding.shimmerMap.clearAnimation();
 
                 LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
                 Marker marker = rpkMap.addMarker(new MarkerOptions().position(userPos).icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_directions_walk_orange_24dp)));

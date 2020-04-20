@@ -201,17 +201,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:msv_errorView="@layout/multistate_error_mainmenu_map">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
                 <fragment
                         android:id="@+id/rpk_main_menu_map"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:name="com.google.android.gms.maps.SupportMapFragment"/>
-            </com.facebook.shimmer.ShimmerFrameLayout>
+
         </com.kennyc.view.MultiStateView>
 
         <LinearLayout
