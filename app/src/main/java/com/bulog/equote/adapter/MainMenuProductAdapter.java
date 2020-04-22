@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bulog.equote.R;
 import com.bulog.equote.model.smallproduct.DataSmallProduct;
 import com.bulog.equote.model.smallproduct.SmallProduct;
+import com.bulog.equote.utils.Constant;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class MainMenuProductAdapter extends RecyclerView.Adapter<MainMenuProduct
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         SmallProduct sp = itemList.get(position);
 
-        Glide.with(appCtx).load(sp.getImageUrl()).into(holder.productImage);
+        Glide.with(appCtx).load(Constant.IMAGE_PRODUCT_BASE_URL + sp.getImageUrl()).fitCenter().into(holder.productImage);
         holder.cv.setCardBackgroundColor(Color.parseColor(sp.getColor()));
         holder.productTitle.setText(sp.getProductName());
         holder.productShortDescr.setText(sp.getShortDesc());

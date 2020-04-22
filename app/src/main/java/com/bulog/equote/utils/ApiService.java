@@ -1,6 +1,7 @@
 package com.bulog.equote.utils;
 
 import com.bulog.equote.model.RPKMap;
+import com.bulog.equote.model.SmallPromo;
 import com.google.gson.JsonObject;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -17,7 +18,12 @@ public interface ApiService {
     Call<JsonObject> register(@Field("fullname") String fullname, @Field("email") String email, @Field("password") String password,
                             @Field("c_password") String cPassword, @Field("address") String address, @Field("phone") String phone, @Field("id_role") int role);
 
-
     @GET("rpk")
     Call<List<RPKMap>> searchNearestRPK(@Query("lat") double latitude, @Query("lng") double longitude);
+
+    @GET("promo")
+    Call<JsonObject> getPromo();
+
+    @GET("products")
+    Call<JsonObject> getProduct();
 }

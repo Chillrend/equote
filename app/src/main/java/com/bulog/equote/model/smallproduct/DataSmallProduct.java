@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataSmallProduct implements Parcelable {
-    @SerializedName("category")
+    @SerializedName("Category")
     @Expose
     private String category;
 
-    @SerializedName("product")
+    @SerializedName("Product")
     @Expose
     private ArrayList<SmallProduct> products = null;
 

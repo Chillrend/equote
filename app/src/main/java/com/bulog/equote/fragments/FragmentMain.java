@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageView;
@@ -35,18 +36,20 @@ import com.bulog.equote.R;
 import com.bulog.equote.adapter.MainMenuTabAdapter;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.RPKMap;
+import com.bulog.equote.model.SmallPromo;
 import com.bulog.equote.model.smallproduct.DataSmallProduct;
 import com.bulog.equote.model.smallproduct.SmallProduct;
 import com.bulog.equote.model.UserModel;
-import com.bulog.equote.utils.ApiCall;
-import com.bulog.equote.utils.ApiService;
-import com.bulog.equote.utils.GPSTracker;
-import com.bulog.equote.utils.SPService;
+import com.bulog.equote.utils.*;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.jama.carouselview.CarouselViewListener;
 import com.kennyc.view.MultiStateView;
 import es.dmoral.toasty.Toasty;
@@ -86,8 +89,16 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     private OnFragmentInteractionListener mListener;
     private Location location;
 
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Gson gson = new Gson();
+
+    private List<SmallPromo> promoList = new ArrayList<>();
+
     //TODO: Remove this after retrieving data from API
     private ArrayList<DataSmallProduct> mockData = new ArrayList<>();
+    private ArrayList<DataSmallProduct> products = new ArrayList<>();
+
+    private MainMenuTabAdapter pageAdapter;
 
     public FragmentMain() {
         // Required empty public constructor
@@ -136,31 +147,39 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,@NonNull ViewGroup container,@NonNull Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(getLayoutInflater());
 
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //Hide the view before loading it inside success api listener
+        binding.promoCarouselview.setVisibility(View.GONE);
+
         sharedPreferenceService = new SPService(getContext());
 
         UserModel user = sharedPreferenceService.getUserFromSp();
 
-        if(user == null){
+        if (user == null) {
             binding.userNameOrLoginButton.setText(R.string.login);
             binding.userNameOrLoginButton.setOnClickListener(v -> {
                 Intent i = new Intent(getActivity(), AuthActivity.class);
                 startActivity(i);
             });
-        }else{
+        } else {
             binding.userNameOrLoginButton.setText(user.getFullname());
         }
 
         locationResult = new GPSTracker.LocationResult() {
             @Override
             public void gotLocation(Location location) {
+
+                if (location == null) {
+                    Log.e("onGotLocation", "gotLocation: ?");
+                    return;
+                }
 
                 LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
                 Marker marker = rpkMap.addMarker(new MarkerOptions().position(userPos).icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_directions_walk_orange_24dp)));
@@ -170,7 +189,7 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
                 call.enqueue(new Callback<List<RPKMap>>() {
                     @Override
                     public void onResponse(Call<List<RPKMap>> call, Response<List<RPKMap>> response) {
-                        if(response.errorBody() != null) return;
+                        if (response.errorBody() != null) return;
 
                         BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_rpk_symetric);
                         Bitmap smallb = Bitmap.createScaledBitmap(bd.getBitmap(), 100, 100, false);
@@ -204,39 +223,87 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
 
         gpsTracker = new GPSTracker();
 
-        if(rpkMap == null){
+        if (rpkMap == null) {
             SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
             mapFragment.getMapAsync(FragmentMain.this::onMapReady);
         }
 
-        //TODO: REMOVE THIS AFTER CALLING IMAGE FROM API
-        int[] images = {R.drawable.promo_1, R.drawable.promo_2, R.drawable.promo_3};
-
-        binding.promoCarouselview.setSize(images.length);
-        binding.promoCarouselview.setResource(R.layout.promo_recyclerview_layout);
-        binding.promoCarouselview.setCarouselViewListener(new CarouselViewListener() {
+        ApiService service = ApiCall.getClient().create(ApiService.class);
+        Call<JsonObject> promoCall = service.getPromo();
+        promoCall.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onBindView(View view, int i) {
-                ImageView imageView = view.findViewById(R.id.promo_layout_imageview);
-                //TODO: Change to setImageBitmap with corresponding promo image from API
-                imageView.setImageDrawable(getResources().getDrawable(images[i]));
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (!response.isSuccessful()) {
+                    binding.promoShimmerlayout.stopShimmer();
+                    Toasty.error(getContext(), R.string.err_general_api_error);
+                    return;
+                }
+
+                binding.promoShimmerlayout.stopShimmer();
+                binding.promoShimmerlayout.setVisibility(View.GONE);
+
+                JsonElement json = response.body().get("data");
+                promoList = gson.fromJson(json, new TypeToken<List<SmallPromo>>() {
+                }.getType());
+
+                binding.promoCarouselview.setVisibility(View.VISIBLE);
+                binding.promoCarouselview.setSize(promoList.size());
+                binding.promoCarouselview.setResource(R.layout.promo_recyclerview_layout);
+                binding.promoCarouselview.setCarouselViewListener(new CarouselViewListener() {
+                    @Override
+                    public void onBindView(View view, int i) {
+                        ImageView imageView = view.findViewById(R.id.promo_layout_imageview);
+                        Glide.with(getContext()).load(Constant.IMAGE_PROMO_BASE_URL + promoList.get(i).getImage()).fitCenter().into(imageView);
+                        //TODO: ADD A CLICK LISTENER INTO THE IMAGE VIEW
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //TODO: Go to product detail activity, passing the seriazable object
+                                Toasty.info(getContext(), "clicked: " + promoList.get(i).getPromoTitle());
+                            }
+                        });
+                    }
+                });
+                binding.promoCarouselview.show();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                binding.promoShimmerlayout.stopShimmer();
+                Toasty.error(getContext(), R.string.err_general_api_error);
+                t.printStackTrace();
             }
         });
-        binding.promoCarouselview.show();
 
-        MainMenuTabAdapter pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), mockData);
-        binding.productViewPagerMainmenu.setAdapter(pageAdapter);
-        binding.productViewPagerMainmenu.setUserInputEnabled(false);
-        binding.productViewPagerMainmenu.setOffscreenPageLimit(4);
-
-        binding.productTabLayoutMainmenu.setTabMode(TabLayout.MODE_SCROLLABLE);
-        TabLayoutMediator mediator = new TabLayoutMediator(binding.productTabLayoutMainmenu, binding.productViewPagerMainmenu, new TabLayoutMediator.TabConfigurationStrategy() {
+        ApiService productService = ApiCall.getClient().create(ApiService.class);
+        Call<JsonObject> productCall = productService.getProduct();
+        productCall.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int i) {
-                tab.setText(mockData.get(i).getCategory());
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (!response.isSuccessful()) {
+                    Toasty.error(getContext(), R.string.err_general_api_error).show();
+                    return;
+                }
+                JsonElement resp = response.body().get("data");
+                products = gson.fromJson(resp, new TypeToken<List<DataSmallProduct>>() {}.getType());
+
+                pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), products);
+                binding.productViewPagerMainmenu.setAdapter(pageAdapter);
+                binding.productViewPagerMainmenu.setUserInputEnabled(false);
+                binding.productViewPagerMainmenu.setOffscreenPageLimit(4);
+
+                binding.productTabLayoutMainmenu.setTabMode(TabLayout.MODE_SCROLLABLE);
+                TabLayoutMediator mediator = new TabLayoutMediator(binding.productTabLayoutMainmenu, binding.productViewPagerMainmenu, (tab, i) -> tab.setText(products.get(i).getCategory()));
+                mediator.attach();
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toasty.error(getContext(), R.string.err_general_api_error).show();
+                t.printStackTrace();
             }
         });
-        mediator.attach();
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
@@ -249,27 +316,27 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    public void checkForLocationPermission(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    public void checkForLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 gpsTracker.getLocation(getActivity(), locationResult);
-            }else{
+            } else {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 10);
             }
-        }else{
+        } else {
             gpsTracker.getLocation(getActivity(), locationResult);
         }
     }
 
-    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(requestCode == 10){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 10) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 gpsTracker.getLocation(getActivity(), locationResult);
-            }else{
-                if(!ActivityCompat.shouldShowRequestPermissionRationale((Activity) getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)){
+            } else {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale((Activity) getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                     dialogBuilder.setTitle(getString(R.string.permission_required));
                     dialogBuilder.setCancelable(false);
@@ -289,19 +356,19 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void startActivityForResult(Intent intent, int requestCode){
+    public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
 
-        switch (requestCode){
+        switch (requestCode) {
             case 1001:
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                            ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         gpsTracker.getLocation(getActivity(), locationResult);
                     }
 
-                }else {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},10);
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 10);
                 }
                 break;
             default:
