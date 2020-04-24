@@ -182,7 +182,12 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
                 }
 
                 LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
-                Marker marker = rpkMap.addMarker(new MarkerOptions().position(userPos).icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_directions_walk_orange_24dp)));
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Marker marker = rpkMap.addMarker(new MarkerOptions().position(userPos).icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_directions_walk_orange_24dp)));
+                    }
+                });
 
                 ApiService service = ApiCall.getClient().create(ApiService.class);
                 Call<List<RPKMap>> call = service.searchNearestRPK(location.getLatitude(), location.getLongitude());
@@ -199,11 +204,16 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
                         LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
 
                         List<RPKMap> nearestRPK = response.body();
-                        for (RPKMap rpk : nearestRPK) {
-                            LatLng pos = new LatLng(Double.parseDouble(rpk.getLatitude()), Double.parseDouble(rpk.getLongitude()));
-                            Marker marker = rpkMap.addMarker(new MarkerOptions().title(rpk.getNamaRpk()).position(pos).icon(markerIcon));
-                            boundBuilder.include(marker.getPosition());
-                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (RPKMap rpk : nearestRPK) {
+                                    LatLng pos = new LatLng(Double.parseDouble(rpk.getLatitude()), Double.parseDouble(rpk.getLongitude()));
+                                    Marker marker = rpkMap.addMarker(new MarkerOptions().title(rpk.getNamaRpk()).position(pos).icon(markerIcon));
+                                    boundBuilder.include(marker.getPosition());
+                                }
+                            }
+                        });
                         LatLngBounds bounds = boundBuilder.build();
                         CameraUpdate camera = CameraUpdateFactory.newLatLngBounds(bounds, 0);
                         rpkMap.animateCamera(camera);
@@ -217,7 +227,13 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
 
                 FragmentMain.this.location = location;
                 LatLng coord = new LatLng(location.getLatitude(), location.getLongitude());
-                rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coord, 15));
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coord, 15));
+
+                    }
+                });
             }
         };
 
@@ -255,11 +271,11 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
                         ImageView imageView = view.findViewById(R.id.promo_layout_imageview);
                         Glide.with(getContext()).load(Constant.IMAGE_PROMO_BASE_URL + promoList.get(i).getImage()).fitCenter().into(imageView);
                         //TODO: ADD A CLICK LISTENER INTO THE IMAGE VIEW
-                        imageView.setOnClickListener(new View.OnClickListener() {
+                        view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //TODO: Go to product detail activity, passing the seriazable object
-                                Toasty.info(getContext(), "clicked: " + promoList.get(i).getPromoTitle());
+                                //TODO: Go to product detail activity/fragment, passing the serializable object
+                                Toasty.info(getContext(), "clicked: " + promoList.get(i).getPromoTitle()).show();
                             }
                         });
                     }
