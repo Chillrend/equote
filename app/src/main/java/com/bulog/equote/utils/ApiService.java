@@ -2,6 +2,7 @@ package com.bulog.equote.utils;
 
 import com.bulog.equote.model.RPKMap;
 import com.bulog.equote.model.SmallPromo;
+import com.bulog.equote.model.smallproduct.SmallProduct;
 import com.google.gson.JsonObject;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -26,4 +27,7 @@ public interface ApiService {
 
     @GET("products")
     Call<JsonObject> getProduct();
+
+    @GET("products/{id}")
+    Call<SmallProduct> getProductDetailById(@Path(value = "id", encoded = true) String id);
 }

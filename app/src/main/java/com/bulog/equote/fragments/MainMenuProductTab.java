@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bulog.equote.DetailProductFragment;
 import com.bulog.equote.R;
 import com.bulog.equote.adapter.MainMenuProductAdapter;
 import com.bulog.equote.databinding.FragmentMainMenuProductTabBinding;
@@ -124,24 +123,10 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
         //TODO: Go to Detail Product Activity/Fragment, passing the corresponding item in the ArrayList
         SmallProduct sp = productList.get(pos);
 
-        DetailProductFragment detailProductFragment = new DetailProductFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ProductURL, sp.getImageUrl());
-        bundle.putString(ProductName, sp.getProductName());
-        bundle.putString(ProductDesc, sp.getShortDesc());
-        bundle.putString(ProductDescLong, sp.getLongDesc());
-        bundle.putString(ProductPrice, sp.getPrice());
-        detailProductFragment.setArguments(bundle);
-
-
+        Fragment f = ProductDetailFragment.newInstance(sp.getId());
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, f).addToBackStack(null).commit();
 
-
-//        FragmentManager fragmentManager = getActivity().getFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, detailProductFragment).addToBackStack(null).commit();
-
-//        Toasty.info(getContext(), "Clicked :" + sp.getProductName(), Toasty.LENGTH_LONG).show();
     }
 
     /**

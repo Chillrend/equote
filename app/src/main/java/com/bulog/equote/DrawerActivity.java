@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.bulog.equote.fragments.FragmentMain;
 import com.bulog.equote.fragments.MainMenuProductTab;
+import com.bulog.equote.fragments.ProductDetailFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import android.view.View;

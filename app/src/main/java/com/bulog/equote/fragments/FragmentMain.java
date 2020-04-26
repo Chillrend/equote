@@ -32,8 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bulog.equote.AuthActivity;
-import com.bulog.equote.DetailProductFragment;
-import com.bulog.equote.ProductListFragment;
 import com.bulog.equote.R;
 import com.bulog.equote.adapter.MainMenuTabAdapter;
 import com.bulog.equote.databinding.FragmentMainBinding;
@@ -133,20 +131,6 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        //Initialize mock data for viewpager
-        //TODO: Remove this after retrieving product data from API
-//        ArrayList<SmallProduct> beras = new ArrayList<>();
-//        beras.add(new SmallProduct("1", "BerasKita", "BerasKita Beras komunis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
-//        beras.add(new SmallProduct("2", "BerasKitaSachet", "BerasKita Beras komunis tapi kecil aweokwaek", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beceng.png", "beras"));
-//
-//        ArrayList<SmallProduct> minyak = new ArrayList<>();
-//        minyak.add(new SmallProduct("4", "MinyakKita", "MinyakKita minyak komunis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
-//        minyak.add(new SmallProduct("5", "MinyakSaya", "MinyakSaya minyak kapitalis awkekwae", "#EA5E24", "http://www.bulog.co.id/images/produk_kita/beras_kita.png", "beras"));
-//
-//        mockData.add(new DataSmallProduct("beras", beras));
-//        mockData.add(new DataSmallProduct("minyak", minyak));
-
     }
 
     @Nullable
@@ -298,9 +282,10 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         binding.seeMoreProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductListFragment productListFragment = new ProductListFragment();
-                FragmentManager manager = getFragmentManager();
-                manager.beginTransaction().replace(R.id.mainFrameLayout, productListFragment).commit();
+                Toasty.info(getContext(), "clicked : seemorebtn").show();
+//                ProductListFragment productListFragment = new ProductListFragment();
+//                FragmentManager manager = getFragmentManager();
+//                manager.beginTransaction().replace(R.id.mainFrameLayout, productListFragment).commit();
             }
         });
 

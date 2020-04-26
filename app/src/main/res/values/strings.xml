@@ -7,7 +7,9 @@
     <string name="email">E-Mail</string>
     <string name="signin">SIGN IN</string>
     <string name="signin_google">SIGN IN WITH GOOGLE</string>
-    <string name="sign_up_here"><u>Don\'t have an account? Sign up here</u></string>
+    <string name="sign_up_here">
+        <u>Don\'t have an account? Sign up here</u>
+    </string>
     <string name="please_fill_in_your_details">Please fill in your details</string>
     <string name="full_name">Full Name</string>
     <string name="wrong_email_or_password">Wrong Email or Password</string>
@@ -21,8 +23,12 @@
     <string name="thanks_for_registering">Thanks For Registering</string>
     <string name="done">DONE</string>
     <string name="rpk_member">Anggota RPK</string>
-    <string name="userTypeRPKDesc">Anggota RPK dapat melihat kiriman penjualan dari anggota lain, lokasi RPK akan ditampilkan pada main menu.</string>
-    <string name="userTypeOtherDesc">User lainnya dapat melihat promosi, informasi produk bulog dan dapat melihat lokasi RPK terdekat</string>
+    <string name="userTypeRPKDesc">Anggota RPK dapat melihat kiriman penjualan dari anggota lain, lokasi RPK akan
+        ditampilkan pada main menu.
+    </string>
+    <string name="userTypeOtherDesc">User lainnya dapat melihat promosi, informasi produk bulog dan dapat melihat lokasi
+        RPK terdekat
+    </string>
     <string name="other">Lainnya</string>
     <string name="next">Next</string>
     <string name="title_activity_drawer">DrawerActivity</string>
@@ -39,11 +45,15 @@
     <string name="find_closest_rpk_from_your_location">Temukan RPK terdekat dari lokasi Anda</string>
     <string name="see">Lihat</string>
     <string name="permission_required">Permission Required</string>
-    <string name="permission_required_message">Kami membutuhkan lokasi Anda untuk mengambil koordinat lokasi RPK terdekat</string>
+    <string name="permission_required_message">Kami membutuhkan lokasi Anda untuk mengambil koordinat lokasi RPK
+        terdekat
+    </string>
     <string name="settings">Pengaturan</string>
     <string name="err_general_api_error">Failed to retrieve data from server, please try again.</string>
     <string name="promotion">Promosi</string>
     <string name="promo_tagline">Dapatkan promo terbaru bulog hanya dalam aplikasi BulogKita!</string>
     <string name="get_to_know_bulog_food_product">Kenali Produk Pangan Bulog</string>
-    <string name="get_to_know_bulog_food_from_indonesia">Kenali produk pangan bulog hasil panen petani Indonesia</string>
+    <string name="get_to_know_bulog_food_from_indonesia">Kenali produk pangan bulog hasil panen petani Indonesia
+    </string>
+    <string name="buy">Beli</string>
 </resources>
