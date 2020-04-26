@@ -301,7 +301,8 @@
                     android:textAppearance="@style/Par_regular"
                     android:textColor="@color/colorAccent"
                     android:drawableEnd="@drawable/ic_keyboard_arrow_right_orange_24dp"
-                    android:text="@string/see"/>
+                    android:text="@string/see"
+                    android:clickable="true"/>
         </RelativeLayout>
 
 

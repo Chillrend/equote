@@ -19,6 +19,14 @@ public class SmallProduct implements Parcelable {
     @Expose
     private String shortDesc;
 
+    @SerializedName("long_desc")
+    @Expose
+    private String longDesc;
+
+    @SerializedName("price")
+    @Expose
+    private String price;
+
     @SerializedName("color")
     @Expose
     private String color;
@@ -31,10 +39,12 @@ public class SmallProduct implements Parcelable {
     @Expose
     private String category;
 
-    public SmallProduct(String id, String productName, String shortDesc, String color, String imageUrl, String category) {
+    public SmallProduct(String id, String productName, String shortDesc, String longDesc, String price, String color, String imageUrl, String category) {
         this.id = id;
         this.productName = productName;
         this.shortDesc = shortDesc;
+        this.longDesc = longDesc;
+        this.price = price;
         this.color = color;
         this.imageUrl = imageUrl;
         this.category = category;
@@ -64,6 +74,18 @@ public class SmallProduct implements Parcelable {
         this.shortDesc = shortDesc;
     }
 
+    public String getLongDesc() {
+        return longDesc;
+    }
+
+    public void setLongDesc(String longDesc) { this.longDesc = longDesc; }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) { this.price = price; }
+
     public String getColor() {
         return color;
     }
@@ -92,6 +114,8 @@ public class SmallProduct implements Parcelable {
         id = in.readString();
         productName = in.readString();
         shortDesc = in.readString();
+        longDesc= in.readString();
+        price = in.readString();
         color = in.readString();
         imageUrl = in.readString();
     }
@@ -118,6 +142,8 @@ public class SmallProduct implements Parcelable {
         dest.writeString(id);
         dest.writeString(productName);
         dest.writeString(shortDesc);
+        dest.writeString(longDesc);
+        dest.writeString(price);
         dest.writeString(color);
         dest.writeString(imageUrl);
     }

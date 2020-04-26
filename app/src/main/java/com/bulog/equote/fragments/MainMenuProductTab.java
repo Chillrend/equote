@@ -1,5 +1,6 @@
 package com.bulog.equote.fragments;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,13 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bulog.equote.DetailProductFragment;
 import com.bulog.equote.R;
 import com.bulog.equote.adapter.MainMenuProductAdapter;
 import com.bulog.equote.databinding.FragmentMainMenuProductTabBinding;
 import com.bulog.equote.model.smallproduct.SmallProduct;
-import es.dmoral.toasty.Toasty;
 
 import java.util.ArrayList;
 
@@ -30,6 +33,14 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM_PRODUCT_LIST = "LIST_OF_PRODUCT";
+    public static final String ProductURL = "productUrl";
+    public static final String ProductName = "productName";
+    public static final String ProductDesc = "productDesc";
+    public static final String ProductDescLong = "productDescLong";
+    public static final String ProductPrice = "productPrice";
+
+
+
 
     // TODO: Rename and change types of parameters
     private ArrayList<SmallProduct> productList;
@@ -112,7 +123,25 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
     public void onProductClick(int pos) {
         //TODO: Go to Detail Product Activity/Fragment, passing the corresponding item in the ArrayList
         SmallProduct sp = productList.get(pos);
-        Toasty.info(getContext(), "Clicked :" + sp.getProductName(), Toasty.LENGTH_LONG).show();
+
+        DetailProductFragment detailProductFragment = new DetailProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ProductURL, sp.getImageUrl());
+        bundle.putString(ProductName, sp.getProductName());
+        bundle.putString(ProductDesc, sp.getShortDesc());
+        bundle.putString(ProductDescLong, sp.getLongDesc());
+        bundle.putString(ProductPrice, sp.getPrice());
+        detailProductFragment.setArguments(bundle);
+
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+
+//        FragmentManager fragmentManager = getActivity().getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager.beginTransaction().replace(R.id.mainFrameLayout, detailProductFragment).addToBackStack(null).commit();
+
+//        Toasty.info(getContext(), "Clicked :" + sp.getProductName(), Toasty.LENGTH_LONG).show();
     }
 
     /**
