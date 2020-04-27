@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bulog.equote.AuthActivity;
+import com.bulog.equote.ProductListFragment;
 import com.bulog.equote.R;
 import com.bulog.equote.adapter.MainMenuTabAdapter;
 import com.bulog.equote.databinding.FragmentMainBinding;
@@ -282,10 +283,9 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         binding.seeMoreProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toasty.info(getContext(), "clicked : seemorebtn").show();
-//                ProductListFragment productListFragment = new ProductListFragment();
-//                FragmentManager manager = getFragmentManager();
-//                manager.beginTransaction().replace(R.id.mainFrameLayout, productListFragment).commit();
+                ProductListFragment productListFragment = new ProductListFragment();
+                FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().replace(R.id.mainFrameLayout, productListFragment).addToBackStack(null).commit();
             }
         });
 
