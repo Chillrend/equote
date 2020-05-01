@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import com.bulog.equote.AuthActivity;
 import com.bulog.equote.ProductListFragment;
 import com.bulog.equote.R;
+import com.bulog.equote.RpkFullActivity;
 import com.bulog.equote.adapter.MainMenuTabAdapter;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.RPKMap;
@@ -72,7 +73,7 @@ import java.util.List;
  * Use the {@link FragmentMain#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment implements OnMapReadyCallback {
+public class FragmentMain extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,6 +86,7 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     private FragmentMainBinding binding;
     private SPService sharedPreferenceService;
     private GoogleMap rpkMap;
+    private RpkMapUtil rpkMapUtil;
 
     private GPSTracker gpsTracker;
     private GPSTracker.LocationResult locationResult;
@@ -92,8 +94,7 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     private OnFragmentInteractionListener mListener;
     private Location location;
 
-    private Handler handler = new Handler(Looper.getMainLooper());
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     private List<SmallPromo> promoList = new ArrayList<>();
 
@@ -146,6 +147,10 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         //Hide the view before loading it inside success api listener
         binding.promoCarouselview.setVisibility(View.GONE);
+        binding.seeMoreMapBtn.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), RpkFullActivity.class);
+            startActivity(i);
+        });
 
         sharedPreferenceService = new SPService(getContext());
 
@@ -161,65 +166,26 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
             binding.userNameOrLoginButton.setText(user.getFullname());
         }
 
+        if (rpkMap == null) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
+            mapFragment.getMapAsync(FragmentMain.this);
+        }
+
         locationResult = new GPSTracker.LocationResult() {
             @Override
             public void gotLocation(Location location) {
-
                 if (location == null) {
                     Log.e("onGotLocation", "gotLocation: ?");
                     return;
                 }
-
                 LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Marker marker = rpkMap.addMarker(new MarkerOptions().position(userPos).icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_directions_walk_orange_24dp)));
-                    }
-                });
-
-                ApiService service = ApiCall.getClient().create(ApiService.class);
-                Call<List<RPKMap>> call = service.searchNearestRPK(location.getLatitude(), location.getLongitude());
-                call.enqueue(new Callback<List<RPKMap>>() {
-                    @Override
-                    public void onResponse(Call<List<RPKMap>> call, Response<List<RPKMap>> response) {
-                        if (response.errorBody() != null) return;
-
-                        BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_rpk_symetric);
-                        Bitmap smallb = Bitmap.createScaledBitmap(bd.getBitmap(), 100, 100, false);
-                        BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(smallb);
-
-                        List<Marker> markers = new ArrayList<>();
-                        LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
-
-                        List<RPKMap> nearestRPK = response.body();
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (RPKMap rpk : nearestRPK) {
-                                    LatLng pos = new LatLng(Double.parseDouble(rpk.getLatitude()), Double.parseDouble(rpk.getLongitude()));
-                                    Marker marker = rpkMap.addMarker(new MarkerOptions().title(rpk.getNamaRpk()).position(pos).icon(markerIcon));
-                                    boundBuilder.include(marker.getPosition());
-                                }
-                            }
-                        });
-                        LatLngBounds bounds = boundBuilder.build();
-                        CameraUpdate camera = CameraUpdateFactory.newLatLngBounds(bounds, 0);
-                        rpkMap.animateCamera(camera);
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<RPKMap>> call, Throwable t) {
-                        Toasty.error(getContext(), R.string.err_general_api_error, Toasty.LENGTH_LONG).show();
-                    }
-                });
-
+                rpkMapUtil = new RpkMapUtil(rpkMap, userPos, getActivity());
+                rpkMapUtil.getRpkMapFromServer();
                 FragmentMain.this.location = location;
-                LatLng coord = new LatLng(location.getLatitude(), location.getLongitude());
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coord, 15));
+                        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPos, 15));
 
                     }
                 });
@@ -227,11 +193,6 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         };
 
         gpsTracker = new GPSTracker();
-
-        if (rpkMap == null) {
-            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.rpk_main_menu_map);
-            mapFragment.getMapAsync(FragmentMain.this::onMapReady);
-        }
 
         ApiService service = ApiCall.getClient().create(ApiService.class);
         Call<JsonObject> promoCall = service.getPromo();
@@ -320,8 +281,6 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         });
     }
 
-
-
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
 
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
@@ -345,7 +304,8 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 10) {
@@ -372,6 +332,7 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
 

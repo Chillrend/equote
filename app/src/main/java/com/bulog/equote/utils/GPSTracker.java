@@ -19,6 +19,7 @@ public class GPSTracker {
     boolean gpsEnabled = false;
     boolean networkEnabled = false;
 
+
     @SuppressLint("MissingPermission")
     public boolean getLocation(Context context, LocationResult result){
         locationResult = result;
