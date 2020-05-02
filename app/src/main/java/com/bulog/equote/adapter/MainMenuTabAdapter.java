@@ -17,17 +17,19 @@ import java.util.ArrayList;
 
 public class MainMenuTabAdapter extends FragmentStateAdapter {
 
-    ArrayList<DataSmallProduct> products;
+    private ArrayList<DataSmallProduct> products;
+    private int orientation;
 
-    public MainMenuTabAdapter (FragmentManager f, Lifecycle lifecycle, ArrayList<DataSmallProduct> products){
+    public MainMenuTabAdapter (FragmentManager f, Lifecycle lifecycle, ArrayList<DataSmallProduct> products, int orientation){
         super(f, lifecycle);
         this.products = products;
+        this.orientation = orientation;
     }
 
     @Override
     public Fragment createFragment(int pos){
         DataSmallProduct product = products.get(pos);
-        return MainMenuProductTab.newInstance(product.getProducts());
+        return MainMenuProductTab.newInstance(product.getProducts(), orientation);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.bulog.equote;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,7 +103,7 @@ public class ProductListFragment extends Fragment{
                     products = gson.fromJson(resp, new TypeToken<List<DataSmallProduct>>() {
                     }.getType());
 
-                    pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), products);
+                    pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), products, LinearLayoutManager.VERTICAL);
                     binding.productViewPagerMainmenu.setAdapter(pageAdapter);
                     binding.productViewPagerMainmenu.setUserInputEnabled(false);
                     binding.productViewPagerMainmenu.setOffscreenPageLimit(4);

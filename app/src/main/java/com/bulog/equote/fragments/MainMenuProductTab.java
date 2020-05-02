@@ -32,6 +32,8 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM_PRODUCT_LIST = "LIST_OF_PRODUCT";
+    private static final String ARG_PARAM_ORIENTATION = "ORIENTATION";
+
     public static final String ProductURL = "productUrl";
     public static final String ProductName = "productName";
     public static final String ProductDesc = "productDesc";
@@ -43,6 +45,7 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
 
     // TODO: Rename and change types of parameters
     private ArrayList<SmallProduct> productList;
+    private int orientation;
 
     private OnFragmentInteractionListener mListener;
     private FragmentMainMenuProductTabBinding binding;
@@ -60,10 +63,11 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
      * @return A new instance of fragment MainMenuProductTab.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainMenuProductTab newInstance(ArrayList<SmallProduct> products) {
+    public static MainMenuProductTab newInstance(ArrayList<SmallProduct> products, int orientation) {
         MainMenuProductTab fragment = new MainMenuProductTab();
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_PARAM_PRODUCT_LIST, products);
+        args.putInt(ARG_PARAM_ORIENTATION, orientation);
         fragment.setArguments(args);
 
         return fragment;
@@ -74,6 +78,7 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             productList = getArguments().getParcelableArrayList(ARG_PARAM_PRODUCT_LIST);
+            orientation = getArguments().getInt(ARG_PARAM_ORIENTATION);
         }
     }
 
@@ -87,10 +92,10 @@ public class MainMenuProductTab extends Fragment implements MainMenuProductAdapt
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
-        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new LinearLayoutManager(getContext(), orientation, false);
         binding.mainMenuProductRecyclerview.setLayoutManager(layoutManager);
 
-        adapter = new MainMenuProductAdapter(productList, getContext(), this::onProductClick);
+        adapter = new MainMenuProductAdapter(productList, getContext(), this::onProductClick, orientation);
         binding.mainMenuProductRecyclerview.setAdapter(adapter);
     }
 

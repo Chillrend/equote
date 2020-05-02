@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bulog.equote.R;
 import com.bulog.equote.model.smallproduct.DataSmallProduct;
@@ -49,11 +51,13 @@ public class MainMenuProductAdapter extends RecyclerView.Adapter<MainMenuProduct
     private ArrayList<SmallProduct> itemList;
     private Context appCtx;
     private OnMainMenuProductClickListener clickListener;
+    private int orientation;
 
-    public MainMenuProductAdapter(ArrayList<SmallProduct> itemList, Context appCtx, OnMainMenuProductClickListener clickListener){
+    public MainMenuProductAdapter(ArrayList<SmallProduct> itemList, Context appCtx, OnMainMenuProductClickListener clickListener, int orientation) {
         this.itemList = itemList;
         this.appCtx = appCtx;
         this.clickListener = clickListener;
+        this.orientation = orientation;
     }
 
     @Override
@@ -71,6 +75,10 @@ public class MainMenuProductAdapter extends RecyclerView.Adapter<MainMenuProduct
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         SmallProduct sp = itemList.get(position);
+
+        if(orientation == LinearLayoutManager.VERTICAL){
+            holder.cv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
 
         Glide.with(appCtx).load(Constant.IMAGE_PRODUCT_BASE_URL + sp.getImageUrl()).fitCenter().into(holder.productImage);
         holder.cv.setCardBackgroundColor(Color.parseColor(sp.getColor()));

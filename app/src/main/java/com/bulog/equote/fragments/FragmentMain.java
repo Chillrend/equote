@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bulog.equote.AuthActivity;
 import com.bulog.equote.ProductListFragment;
 import com.bulog.equote.R;
@@ -262,7 +263,7 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback, Activi
                 JsonElement resp = response.body().get("data");
                 products = gson.fromJson(resp, new TypeToken<List<DataSmallProduct>>() {}.getType());
 
-                pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), products);
+                pageAdapter = new MainMenuTabAdapter(getChildFragmentManager(), getLifecycle(), products, LinearLayoutManager.HORIZONTAL);
                 binding.productViewPagerMainmenu.setAdapter(pageAdapter);
                 binding.productViewPagerMainmenu.setUserInputEnabled(false);
                 binding.productViewPagerMainmenu.setOffscreenPageLimit(4);

@@ -21,7 +21,6 @@
                 android:layout_height="100dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_beras"
                 />
         <TextView
                   android:id="@+id/product_name"
@@ -29,7 +28,6 @@
                   android:layout_height="wrap_content"
                   android:layout_marginStart="@dimen/spacing_medium"
                   android:layout_toEndOf="@id/product_image"
-                  android:text="Beras Kita"
                   android:textSize="22sp"
                   android:textColor="@android:color/white"
                   android:textStyle="bold"
@@ -41,7 +39,6 @@
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_toEndOf="@id/product_image"
                 android:layout_below="@id/product_name"
-                android:text="Tagline Beras Keluarga Indonesia Beras jenis premium produksi dalam negeri jenis IR64"
                 android:textSize="12sp"
                 android:textColor="@android:color/white"
                 android:fontFamily="sans-serif-light"/>
@@ -58,7 +55,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="Detail"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -68,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:text="BerasKita merupakan hasil produksi petani Indonesia yang bebas pemutih, bebas pengawet, dan bebas pewangi yang diolah dengan teknologi modern. Ukuran Kemasan : Kemasan 1 Kg, Kemasan 5 kg, Kemasan 10 kg, Kemasan 25 kg, Kemasan 50 kg BerasKita jenis premium saat ini sudah dipasarkan ke ritel modern, tradisional, outlet Rumah Pangan Kita (RPK) dan toko/agen pengecer sehingga pendistribusian sudah tersedia di seluruh Indonesia"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:lineSpacingExtra="8dp"
@@ -90,7 +85,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:text="Rp. 50,000 / Kg"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif"/>
