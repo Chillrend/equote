@@ -35,7 +35,7 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RpkFullActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
+public class RpkFullActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleMap rpkMap;
     private GPSTracker gpsTracker;
@@ -45,7 +45,7 @@ public class RpkFullActivity extends AppCompatActivity implements OnMapReadyCall
     private RpkMapUtil rpkMapUtil;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         binding = ActivityRpkFullBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -81,6 +81,7 @@ public class RpkFullActivity extends AppCompatActivity implements OnMapReadyCall
                 });
                 rpkMapUtil = new RpkMapUtil(rpkMap, coord, RpkFullActivity.this);
                 rpkMapUtil.getRpkMapFromServer();
+                rpkMap.setOnMarkerClickListener(RpkFullActivity.this);
             }
         };
 
@@ -158,5 +159,13 @@ public class RpkFullActivity extends AppCompatActivity implements OnMapReadyCall
         UiSettings configs = rpkMap.getUiSettings();
         configs.setMapToolbarEnabled(false);
         configs.setZoomControlsEnabled(false);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        //TODO: Ambil detail RPK disini berdasarkan ID, dan tampilkan di Bottom Sheet
+        String rpkId = (String) marker.getTag();
+        Toasty.info(this, "Clicked RPK ID :" + rpkId).show();
+        return false;
     }
 }

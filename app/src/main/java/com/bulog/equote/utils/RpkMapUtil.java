@@ -57,6 +57,7 @@ public class RpkMapUtil {
                     for (RPKMap rpk : nearestRPK) {
                         LatLng pos = new LatLng(Double.parseDouble(rpk.getLatitude()), Double.parseDouble(rpk.getLongitude()));
                         Marker marker = rpkMap.addMarker(new MarkerOptions().title(rpk.getNamaRpk()).position(pos).icon(markerIcon));
+                        marker.setTag(rpk.getId());
                         boundBuilder.include(marker.getPosition());
                     }
                 });
