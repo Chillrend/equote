@@ -1,149 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/spacing_medium"
-        app:peekHeight="@dimen/spacing_medium"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_medium"
+        android:paddingRight="@dimen/spacing_medium"
+        android:paddingLeft="@dimen/spacing_medium"
+        android:background="@drawable/background_bottom_sheet"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:layout_insetEdge="bottom"
+        app:behavior_fitToContents="true"
+        app:behavior_peekHeight="@dimen/peek_height"
         app:behavior_hideable="false">
-    <ImageView
-            android:id="@+id/rpk_logo_static"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/ic_rpk_symetric"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    <TextView
-            android:id="@+id/rpk_rpk_static"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/rpk_logo_static"
-            android:textAppearance="@style/Light_sub"
-            android:textSize="12sp"
-            android:text="Rumah Pangan Kita" />
-    <TextView
-            android:id="@+id/rpk_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium"
-            app:layout_constraintTop_toBottomOf="@id/rpk_rpk_static"
-            app:layout_constraintStart_toEndOf="@id/rpk_logo_static"
-            android:textAppearance="@style/Par_regular"
-            android:textSize="18sp"
-            android:text="Pak mul" />
-
     <LinearLayout
-            android:id="@+id/rpk_addr_wrapper"
+            android:id="@+id/peeker_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/spacing_extra_large"
-            app:layout_constraintTop_toBottomOf="@id/rpk_logo_static"
-            app:layout_constraintStart_toStartOf="parent"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_small">
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="@string/address"
-            app:srcCompat="@drawable/ic_store_mall_directory_black_24dp"/>
-        <TextView
-            android:id="@+id/rpk_addr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_gravity="center_vertical"
-            android:textAppearance="@style/Par_Light"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Jl. Pabuaran Rt.01/10 No. 18 Kel. Harapan Jaya Kec. Cibinong"/>
-    </LinearLayout>
-
-    <LinearLayout
-            android:id="@+id/rpk_phone_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_constraintTop_toBottomOf="@id/rpk_addr_wrapper"
-            app:layout_constraintStart_toStartOf="parent"
-            android:orientation="horizontal">
-        <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/address"
-                app:srcCompat="@drawable/ic_phone2"/>
-        <TextView
-                android:id="@+id/rpk_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_gravity="center_vertical"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textAppearance="@style/Par_Light"
-                android:text="021-233123123"/>
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/ic_menu_black_24dp"/>
     </LinearLayout>
-
-
-    <LinearLayout
-            android:id="@+id/rpk_email_wrapper"
+    <com.kennyc.view.MultiStateView
+            android:id="@+id/bottom_sheet_msv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_constraintTop_toBottomOf="@id/rpk_phone_wrapper"
-            app:layout_constraintStart_toStartOf="parent"
-            android:orientation="horizontal">
-        <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/address"
-                app:srcCompat="@drawable/ic_mail_black_24dp"/>
-        <TextView
-                android:id="@+id/rpk_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_gravity="center_vertical"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textAppearance="@style/Par_Light"
-                android:text="madjavacoder@gmail.com"/>
-    </LinearLayout>
+            app:msv_loadingView="@layout/multistate_bottomsheet_loading"
+            app:msv_emptyView="@layout/multistate_bottomsheet_empty">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottom_sheet_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/rpk_logo_static"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    app:srcCompat="@drawable/ic_rpk_symetric"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                    android:id="@+id/rpk_rpk_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginStart="@dimen/spacing_medium"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/rpk_logo_static"
+                    android:textAppearance="@style/Light_sub"
+                    android:textSize="12sp"
+                    android:text="Rumah Pangan Kita" />
+            <TextView
+                    android:id="@+id/rpk_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium"
+                    app:layout_constraintTop_toBottomOf="@id/rpk_rpk_static"
+                    app:layout_constraintStart_toEndOf="@id/rpk_logo_static"
+                    android:textAppearance="@style/Par_regular"
+                    android:textSize="18sp"
+                    android:text="Pak mul" />
 
-    <LinearLayout
-            android:id="@+id/rpk_info_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_constraintTop_toBottomOf="@id/rpk_email_wrapper"
-            app:layout_constraintStart_toStartOf="parent"
-            android:orientation="horizontal">
-        <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/address"
-                app:srcCompat="@drawable/ic_info_blue_24dp"/>
-        <TextView
-                android:id="@+id/rpk_info_string"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_gravity="center_vertical"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textAppearance="@style/Par_Light"
-                android:textStyle="italic"
-                android:textColor="#223C77"
-                android:text="RPK ini memiliki produk yang ingin Anda beli"/>
-    </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/rpk_addr_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/spacing_extra_large"
+                    app:layout_constraintTop_toBottomOf="@id/rpk_logo_static"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal">
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/address"
+                        app:srcCompat="@drawable/ic_store_mall_directory_black_24dp"/>
+                <TextView
+                        android:id="@+id/rpk_addr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_medium"
+                        android:layout_gravity="center_vertical"
+                        android:textAppearance="@style/Par_Light"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Jl. Pabuaran Rt.01/10 No. 18 Kel. Harapan Jaya Kec. Cibinong"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/rpk_phone_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    app:layout_constraintTop_toBottomOf="@id/rpk_addr_wrapper"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal">
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/address"
+                        app:srcCompat="@drawable/ic_phone2"/>
+                <TextView
+                        android:id="@+id/rpk_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_medium"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAppearance="@style/Par_Light"
+                        android:text="021-233123123"/>
+            </LinearLayout>
 
 
+            <LinearLayout
+                    android:id="@+id/rpk_email_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    app:layout_constraintTop_toBottomOf="@id/rpk_phone_wrapper"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal">
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/address"
+                        app:srcCompat="@drawable/ic_mail_black_24dp"/>
+                <TextView
+                        android:id="@+id/rpk_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_medium"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAppearance="@style/Par_Light"
+                        android:text="madjavacoder@gmail.com"/>
+            </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                    android:id="@+id/rpk_info_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    app:layout_constraintTop_toBottomOf="@id/rpk_email_wrapper"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal">
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/address"
+                        app:srcCompat="@drawable/ic_info_blue_24dp"/>
+                <TextView
+                        android:id="@+id/rpk_info_string"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_medium"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAppearance="@style/Par_Light"
+                        android:textStyle="italic"
+                        android:textColor="#223C77"
+                        android:text="RPK ini memiliki produk yang ingin Anda beli"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.kennyc.view.MultiStateView>
+</LinearLayout>

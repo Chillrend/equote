@@ -22,6 +22,9 @@ public interface ApiService {
     @GET("rpk")
     Call<List<RPKMap>> searchNearestRPK(@Query("lat") double latitude, @Query("lng") double longitude);
 
+    @GET("rpk/{id}")
+    Call<RPKMap> getRpkById(@Path(value = "id", encoded = true) String id);
+
     @GET("promo")
     Call<JsonObject> getPromo();
 

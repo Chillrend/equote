@@ -57,4 +57,6 @@
     </string>
     <string name="buy">Beli</string>
     <string name="title_activity_rpk_full">Cari RPK</string>
+    <string name="loading_api">Getting data from server...</string>
+    <string name="click_rpk_marker_to_view_details">Click an RPK marker to view the details</string>
 </resources>

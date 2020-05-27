@@ -35,7 +35,7 @@
         <activity
                 android:name=".RpkFullActivity"
                 android:label="@string/title_activity_rpk_full"
-                android:theme="@style/AppTheme">
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".AuthActivity"
