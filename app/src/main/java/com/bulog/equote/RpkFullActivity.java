@@ -84,13 +84,14 @@ public class RpkFullActivity extends AppCompatActivity implements OnMapReadyCall
         rpkEmail = view.findViewById(R.id.rpk_email);
         rpkIsHaveProduct = view.findViewById(R.id.rpk_info_string);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        //Setting initial multistate view for the bottom sheet
+        msv = view.findViewById(R.id.bottom_sheet_msv);
+        msv.setViewState(MultiStateView.ViewState.EMPTY);
+
+        //Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        msv = view.findViewById(R.id.bottom_sheet_msv);
-        msv.setViewState(MultiStateView.ViewState.EMPTY);
 
         binding.searchMapBtn.setOnClickListener(v -> {
             LatLng coord = rpkMap.getCameraPosition().target;

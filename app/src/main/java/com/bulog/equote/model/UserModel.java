@@ -19,6 +19,8 @@ public class UserModel {
     private String mPhone;
     @SerializedName("token")
     private String mToken;
+    @SerializedName("is_social_user")
+    private boolean socialUser;
 
     public String getAddress() {
         return mAddress;
@@ -68,4 +70,11 @@ public class UserModel {
         mToken = token;
     }
 
+    public boolean isSocialUser() {
+        return socialUser;
+    }
+
+    public void setSocialUser(boolean socialUser) {
+        this.socialUser = socialUser;
+    }
 }

@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.bulog.equote.AuthActivity;
-import com.bulog.equote.DrawerActivity;
-import com.bulog.equote.MainActivity;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import com.bulog.equote.*;
 import com.bulog.equote.databinding.LoginFragmentBinding;
-import com.bulog.equote.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,17 +38,14 @@ public class FragmentLogin extends Fragment {
 
         sharedPreferenceService = new SPService(getActivity());
 
-        if(sharedPreferenceService.isUserLoggedIn()){
-            Intent i = new Intent(getActivity(), DrawerActivity.class);
-            startActivity(i);
-            getActivity().finish();
-        }
+        finishIfLoggedIn();
 
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
+
         binding.signUpTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +95,25 @@ public class FragmentLogin extends Fragment {
                 }
             });
         });
+
+        binding.btnSignWithGoogle.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), WebViewActivity.class);
+            startActivity(i);
+        });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        finishIfLoggedIn();
+    }
+
+    public void finishIfLoggedIn(){
+        if(sharedPreferenceService.isUserLoggedIn()){
+            Intent i = new Intent(getActivity(), DrawerActivity.class);
+            startActivity(i);
+            getActivity().finish();
+        }
+    }
 }
