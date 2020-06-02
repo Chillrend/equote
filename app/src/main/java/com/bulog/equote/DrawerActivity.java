@@ -2,6 +2,7 @@ package com.bulog.equote;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bulog.equote.fragments.FragmentMain;
 import com.bulog.equote.fragments.MainMenuProductTab;
 import com.bulog.equote.fragments.ProductDetailFragment;
+import com.bulog.equote.utils.SPService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
@@ -26,11 +28,15 @@ public class DrawerActivity extends AppCompatActivity
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private SPService sharedPrefService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        sharedPrefService = new SPService(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setElevation(0);
         setSupportActionBar(toolbar);
@@ -47,6 +53,11 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView user = headerView.findViewById(R.id.nav_header_user);
+
+        if(sharedPrefService.getUserFromSp().getFullname() != null) user.setText(sharedPrefService.getUserFromSp().getFullname());
 
         addInitialFragment();
 
