@@ -1,5 +1,6 @@
 package com.bulog.equote.utils;
 
+import com.bulog.equote.model.Promo;
 import com.bulog.equote.model.RPKMap;
 import com.bulog.equote.model.SmallPromo;
 import com.bulog.equote.model.smallproduct.SmallProduct;
@@ -27,6 +28,9 @@ public interface ApiService {
 
     @GET("promo")
     Call<JsonObject> getPromo();
+
+    @GET("promo/{id}")
+    Call<Promo> getPromoDetailById(@Path(value = "id", encoded = true) int id);
 
     @GET("products")
     Call<JsonObject> getProduct();

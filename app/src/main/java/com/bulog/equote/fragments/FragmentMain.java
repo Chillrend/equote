@@ -32,10 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import com.bulog.equote.AuthActivity;
-import com.bulog.equote.ProductListFragment;
+import com.bulog.equote.*;
 import com.bulog.equote.R;
-import com.bulog.equote.RpkFullActivity;
 import com.bulog.equote.adapter.MainMenuTabAdapter;
 import com.bulog.equote.databinding.FragmentMainBinding;
 import com.bulog.equote.model.RPKMap;
@@ -226,6 +224,9 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback, Activi
                             @Override
                             public void onClick(View v) {
                                 //TODO: Go to product detail activity/fragment, passing the serializable object
+                                Intent intent = new Intent(getActivity(), PromoDetailActivity.class);
+                                intent.putExtra("promo_id", promoList.get(i).getId());
+                                startActivity(intent);
                                 Toasty.info(getContext(), "clicked: " + promoList.get(i).getPromoTitle()).show();
                             }
                         });
