@@ -18,7 +18,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".PromoDetailActivity">
+        <activity android:name=".SellActivity">
+        </activity>
+        <activity android:name=".PromoDetailActivity"
+                    android:theme="@style/NoActionBar">
         </activity>
         <activity android:name=".WebViewActivity">
         </activity>

@@ -49,7 +49,9 @@
         terdekat
     </string>
     <string name="settings">Pengaturan</string>
-    <string name="err_general_api_error">Failed to retrieve data from server, please check your internet connection and try again.</string>
+    <string name="err_general_api_error">Failed to retrieve data from server, please check your internet connection and
+        try again.
+    </string>
     <string name="promotion">Promosi</string>
     <string name="promo_tagline">Dapatkan promo terbaru bulog hanya dalam aplikasi BulogKita!</string>
     <string name="get_to_know_bulog_food_product">Kenali Produk Pangan Bulog</string>
@@ -59,4 +61,5 @@
     <string name="title_activity_rpk_full">Cari RPK</string>
     <string name="loading_api">Getting data from server...</string>
     <string name="click_rpk_marker_to_view_details">Click an RPK marker to view the details</string>
+    <string name="logout">Logout</string>
 </resources>

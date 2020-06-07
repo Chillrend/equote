@@ -51,5 +51,19 @@
         </LinearLayout>
 
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <Button
+                android:id="@+id/promo_backbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:text="BACK"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.kennyc.view.MultiStateView>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kennyc.view.MultiStateView
+        android:id="@+id/sell_actiity_multistate"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:msv_errorView="@layout/multistate_general_apierror"
+        tools:context=".SellActivity">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:id="@+id/type_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    app:layout_constraintTop_toBottomOf="@id/password_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="0.1"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/ic_home_black_24dp"/>
+
+                <Spinner
+                        android:id="@+id/type_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="0.9"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</com.kennyc.view.MultiStateView>

@@ -211,6 +211,12 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback, Activi
                 promoList = gson.fromJson(json, new TypeToken<List<SmallPromo>>() {
                 }.getType());
 
+                if(promoList == null || promoList.size() == 0){
+                    binding.promotionTvWrapper.setVisibility(View.GONE);
+                    binding.promoCarouselview.setVisibility(View.GONE);
+                   return;
+                }
+
                 binding.promoCarouselview.setVisibility(View.VISIBLE);
                 binding.promoCarouselview.setSize(promoList.size());
                 binding.promoCarouselview.setResource(R.layout.promo_recyclerview_layout);

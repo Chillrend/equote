@@ -23,13 +23,18 @@ public class SPService {
         return user.contains(USER_STRING);
     }
 
-    //TODO: Bikin pojo isi user detail, ganti String disini ke JSON
     public UserModel getUserFromSp(){
         return gson.fromJson(user.getString(USER_STRING, null), UserModel.class);
     }
 
-    //TODO: Set JSON to SP
     public void setUserToSp(String obj){
         user.edit().putString(USER_STRING, obj).apply();
+    }
+
+    public void doLogout(){
+        //For now we do logout from device only by deleting the user cache
+        //Doing this in a long run may raise a huge security concern
+        //TODO: Make an API Call to revoke the access token from the backend
+        user.edit().clear().apply();
     }
 }

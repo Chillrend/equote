@@ -37,4 +37,7 @@ public interface ApiService {
 
     @GET("products/{id}")
     Call<SmallProduct> getProductDetailById(@Path(value = "id", encoded = true) String id);
+
+    @POST("logoout")
+    Call<JsonObject> doLogout(@Header("Authorization") String token);
 }

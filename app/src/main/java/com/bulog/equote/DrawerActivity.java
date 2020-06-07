@@ -1,5 +1,6 @@
 package com.bulog.equote;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import com.bulog.equote.databinding.ActivityDrawerBinding;
 import com.bulog.equote.fragments.FragmentMain;
 import com.bulog.equote.fragments.MainMenuProductTab;
 import com.bulog.equote.fragments.ProductDetailFragment;
@@ -29,11 +31,14 @@ public class DrawerActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private SPService sharedPrefService;
+    private ActivityDrawerBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer);
+        binding = ActivityDrawerBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         sharedPrefService = new SPService(this);
 
@@ -57,7 +62,13 @@ public class DrawerActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         TextView user = headerView.findViewById(R.id.nav_header_user);
 
-        if(sharedPrefService.getUserFromSp().getFullname() != null) user.setText(sharedPrefService.getUserFromSp().getFullname());
+        Menu menu = navigationView.getMenu();
+
+        if(sharedPrefService.getUserFromSp() != null){
+            user.setText(sharedPrefService.getUserFromSp().getFullname());
+            MenuItem login_out = menu.findItem(R.id.nav_login_out);
+            login_out.setTitle(R.string.logout).setIcon(R.drawable.ic_logout);
+        }
 
         addInitialFragment();
 
@@ -125,10 +136,15 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_hubungi) {
 
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_login_out){
+            if(sharedPrefService.isUserLoggedIn()){
+                sharedPrefService.doLogout();
+                //Refresh the activity
+                recreate();
+            }else{
+                Intent i = new Intent(this, AuthActivity.class);
+                startActivity(i);
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
