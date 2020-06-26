@@ -181,13 +181,15 @@ public class FragmentMain extends Fragment implements OnMapReadyCallback, Activi
                 rpkMapUtil = new RpkMapUtil(rpkMap, userPos, getActivity());
                 rpkMapUtil.getRpkMapFromServer();
                 FragmentMain.this.location = location;
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPos, 15));
+                if(getActivity() != null){
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            rpkMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPos, 15));
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         };
 
