@@ -1,6 +1,6 @@
 # Bulog E-QUOTE
 
-An android app for submitting Request for Quotation at Bulog Indonesia.
+A portal android app to introduce user to bulog company
 
 This application is developed solely for education purpose.
 
